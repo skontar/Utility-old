@@ -1,0 +1,20 @@
+#!/bin/bash
+
+DIRECTORIES=( 
+    "$HOME/Documents"
+    "$HOME/Presentation"
+    "$HOME/Python"
+    "$HOME/Utility"
+)
+SSH="skontar@file.brq.redhat.com"
+TARGET="~/backups"
+DATE=$( date +%Y-%m-%d-%H%M%S )
+
+
+ssh "$SSH" mkdir --parents "$TARGET"
+
+for directory in "${DIRECTORIES[@]}"; do
+    rsync -ravz --delete "$directory" "$SSH:$TARGET/latest"
+done
+
+ssh "$SSH" cp -al "$TARGET/latest" "$TARGET/$DATE"

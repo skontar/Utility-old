@@ -1,0 +1,28 @@
+#!/bin/bash
+
+warm_color="#ffff00"
+critical_color="#ff0000"
+
+
+top=$( top -bn2 ) 
+values=( $( sed -r -n 's/^.*Cpu\(s\):.*[[:space:]]+([0-9.]+)[[:space:]]+id,.*$/\1/p' <<< "$top" ) )
+cpu=$( bc <<< "scale=0; (100.0 - ${values[1]}) / 1")
+
+temp_string=$( </sys/class/thermal/thermal_zone1/temp )
+temp=$(( temp_string / 1000 ))
+
+if (( temp > 85 )); then
+    thermo="<span color=\"$critical_color\"> $temp°C</span>"
+elif (( temp > 80 )); then
+    thermo="<span color=\"$warm_color\"> $temp°C</span>"
+elif (( temp > 70 )); then
+    thermo=" $temp°C"
+elif (( temp > 55 )); then
+    thermo=" $temp°C"
+elif (( temp > 40 )); then
+    thermo=" $temp°C"
+else
+    thermo=" $temp°C"
+fi
+
+echo " $cpu% $thermo"

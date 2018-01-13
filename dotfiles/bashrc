@@ -1,0 +1,98 @@
+# .bashrc
+
+# Prompt settings
+
+PS1='\[\e[1;37m\]\w\[\e[m\] $( RET="$?"; if [[ "$RET" != 0 ]]; then echo "\[\033[38;5;196m\]✘ $RET "; fi )\[\e[1;32m\]\$\[\e[m\]\[\e[0m\] '
+
+# PS1='\[\e[1;37m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\]\[\e[0m\] '
+# PS1='\[\e[1;37m\]\w\[\e[m\] \[\e[1;31m\]\$\[\e[m\]\[\e[0m\] '
+
+# Aliases
+alias u='micro'
+alias v='vagrant'
+alias vim='vimx'
+alias sdu='sudo dnf upgrade'
+alias sdut='sdu --enablerepo=updates-testing'
+alias sdi='sudo dnf install'
+alias sdit='sdi --enablerepo=updates-testing'
+alias sdr='sudo dnf remove'
+alias ds='dnf search'
+alias dl='dnf list'
+alias dli='dnf list installed'
+alias dlig='dnf list installed | grep'
+alias ls='ls --color=auto'
+alias ll='ls -la'
+alias grep='grep --color=auto'
+alias nf='notify-send -u critical -i /usr/share/icons/elementary-xfce/actions/64/help-info.svg "Job finished!"'
+alias lc='wc -l'
+alias psg='ps aux | grep'
+alias wttr='curl wttr.in'
+
+# Git aliases
+commit_function() {
+    if (( $# != 0 )); then
+        git commit -m "$*"
+    else
+        git commit
+    fi
+}
+
+alias gs='git status'
+alias gf='git fetch'
+alias ga='git add'
+alias gl='git log --pretty=format:"%C(yellow)%h%C(reset) %cd %C(green)%<(16)%an%C(reset)%C(auto)%d%C(reset)% s" --date=short'
+alias gls='gl --stat'
+alias glg='gl --graph'
+alias glgb='gl --graph --branches --remotes'
+alias glf='git log'
+alias gc=commit_function
+alias gca='git commit --amend'
+alias gco='git checkout'
+alias gd='git diff'
+alias gdt='git difftool --dir-diff 2> /dev/null'
+alias gp='git pull'
+alias gpr='git pull --rebase'
+
+# Git autocomplete
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+  __git_complete gco _git_checkout
+fi
+
+if [ -f ~/Repos/insights-tools/development/plugin-completion.bash ]; then
+  . ~/Repos/insights-tools/development/plugin-completion.bash
+fi
+
+# Git bash prompt
+GIT_PROMPT_ONLY_IN_REPO=1
+GIT_PROMPT_THEME=Custom
+if [ -f ~/Utility/repos/bash-git-prompt/gitprompt.sh ]; then
+    . ~/Utility/repos/bash-git-prompt/gitprompt.sh
+fi
+
+# Autojump
+if [ -f /usr/share/autojump/autojump.bash ]; then
+    . /usr/share/autojump/autojump.bash
+fi
+
+# Editor
+#export VISUAL=micro
+#export EDITOR="$VISUAL"
+
+# SFM2
+export SFM2_SERVER_CONFIG=~/.sfm2/configuration.ini
+
+# Virtual environments
+activate_function() {
+    possibilities=( "bin/activate" "env/bin/activate" "venv/bin/activate" )
+    for value in "${possibilities[@]}"; do
+        if [[ -f "$value" ]]; then
+            . "$value"
+            return
+        fi
+    done
+    return 1
+}
+
+alias a=activate_function
+alias d='deactivate'

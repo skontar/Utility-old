@@ -1,0 +1,4 @@
+#!/bin/bash
+
+pkill nm-applet
+nohup nm-applet &> /dev/null &

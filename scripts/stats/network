@@ -1,0 +1,65 @@
+#!/bin/bash
+
+wired_name="enp0s25"
+wifi_name="wlp3s0"
+wifi_weak_color="#ffff00"
+wifi_dead_color="#ff0000"
+kerberos_expired_color="#ff0000"
+
+wired_state=$( </sys/class/net/$wired_name/operstate )
+wifi_state=$( </sys/class/net/$wifi_name/operstate )
+ifconfig_data=$( ifconfig )
+ifconfig_filtered=$( grep -E '^([^[:space:]]+:|[[:space:]]+RX packets|[[:space:]]+TX packets|[[:space:]]+inet )' <<< "$ifconfig_data" )
+
+if [[ "$wired_state" == "up" ]]; then
+    wired_ifdata=$( grep "$wired_name" -A 3 <<< "$ifconfig_filtered" )
+    wired_ip=$( sed -r -n 's/^.*inet ([[:digit:]\.]+).*$/\1/p' <<< "$wired_ifdata" )
+    domain=$( dnsdomainname )
+    
+    first_part=" $domain $wired_ip"
+    first_part_short=" $domain"
+fi
+
+if [[ "$wifi_state" == "up" ]]; then
+    wifi_iwdata=$( iwconfig 2>&1 | grep "$wifi_name" -A 5 )
+    essid=$( sed -r -n 's/^.*ESSID:\"(.*)\".*$/\1/p' <<< "$wifi_iwdata" ) 
+    strength_values=( $( sed -r -n 's|^.*Link Quality=([[:digit:]]+)/([[:digit:]]+).*$|\1 \2|p' <<< "$wifi_iwdata" ) )
+    strength=$(( 100 * strength_values[0] / strength_values[1] ))
+    
+    # if (( strength > 50 )); then
+        # wifi_symbol=""
+    # elif (( strength > 20 )); then
+        # wifi_symbol="<span color=\"$wifi_weak_color\"></span>"
+    # else
+        # wifi_symbol="<span color=\"$wifi_dead_color\"></span>"
+    # fi
+
+    if (( strength > 60 )); then
+        wifi_symbol=""
+    elif (( strength > 30 )); then
+        wifi_symbol="<span color=\"$wifi_weak_color\"></span>"
+    else
+        wifi_symbol="<span color=\"$wifi_dead_color\"></span>"
+    fi
+    
+    wifi_ifdata=$( grep wlp3s0 -A 3 <<< "$ifconfig_filtered" )
+    wifi_ip=$( sed -r -n 's/^.*inet ([[:digit:]\.]+).*$/\1/p' <<< "$wifi_ifdata" )
+    wifi_rx=$( sed -r -n 's/^[[:space:]]+RX.*\((.*)\)/\1/p' <<< "$wifi_ifdata" )
+    wifi_tx=$( sed -r -n 's/^[[:space:]]+TX.*\((.*)\)/\1/p' <<< "$wifi_ifdata" )
+    
+    second_part="$wifi_symbol $essid $wifi_ip  $wifi_rx  $wifi_tx"
+    second_part_short="$wifi_symbol $essid"
+fi
+
+if [[ "$ifconfig_data" =~ 'tun0' ]]; then
+    vpn_name=$( nmcli con | sed -r -n 's/^(.*)[[:space:]]+[0-9a-f-]+[[:space:]]+vpn[[:space:]]+('"$wired_name"'|'"$wifi_name"').*$/\1/p' )
+    vpn="  ${vpn_name%"${vpn_name##*[![:space:]]}"}"  # rstrip
+    vpn_short=" "
+fi
+
+if [[ "$wired_state" == "up" && "$wifi_state" == "up" ]]; then
+    separator=" "
+fi
+
+echo "$first_part$separator$second_part$vpn"
+echo "$first_part_short$separator$second_part_short$vpn_short"

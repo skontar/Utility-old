@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-notifyd" version="1.0">
+  <property name="notify-location" type="uint" value="3"/>
+  <property name="theme" type="string" value="Default"/>
+  <property name="applications" type="empty">
+    <property name="known_applications" type="array">
+      <value type="string" value="abrt-applet"/>
+      <value type="string" value="calibre"/>
+      <value type="string" value="Dropbox"/>
+      <value type="string" value="Firefox"/>
+      <value type="string" value="hexchat"/>
+      <value type="string" value="Hexchat notification server"/>
+      <value type="string" value="mcheck"/>
+      <value type="string" value="notify-send"/>
+      <value type="string" value="org.kdenlive.kdenlive"/>
+      <value type="string" value="presentation_switch"/>
+      <value type="string" value="reproducer"/>
+      <value type="string" value="Sealert notification"/>
+      <value type="string" value="test"/>
+      <value type="string" value="Thunar"/>
+      <value type="string" value="Thunderbird"/>
+      <value type="string" value="udiskie"/>
+      <value type="string" value="update_checker"/>
+      <value type="string" value="Xfce volume control"/>
+      <value type="string" value="Xfce4-notifyd settings"/>
+      <value type="string" value="xfce4-power-manager"/>
+      <value type="string" value="xfce4-settings-helper"/>
+    </property>
+    <property name="muted_applications" type="array">
+    </property>
+  </property>
+  <property name="log-level" type="uint" value="0"/>
+  <property name="log-level-apps" type="uint" value="0"/>
+  <property name="do-fadeout" type="bool" value="true"/>
+  <property name="primary-monitor" type="uint" value="1"/>
+</channel>

@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Copy data from email to clipboard, just copy lines as the ones following:
+#
+#      Whiteboard|impact=important,public=201 |impact=important,public=201
+#                |70329,reported=20170323,sou |70329,reported=20170323,sou
+#                |rce=distros,cvss3=7.8/CVSS: |rce=distros,cvss3=7.8/CVSS:
+#                |3.0/AV:L/AC:L/PR:L/UI:N/S:U |3.0/AV:L/AC:L/PR:L/UI:N/S:U
+#                |/C:H/I:H/A:H,cwe=CWE-122,rh |/C:H/I:H/A:H,cwe=CWE-122,rh
+#                |el-5/kernel=wontfix,rhel-6/ |el-5/kernel=notaffected,rhe
+#                |kernel=affected,rhel-7/kern |l-6/kernel=notaffected,rhel
+#                |el=affected,rhel-7/kernel-r |-7/kernel=affected,rhel-7/k
+#                |t=affected,mrg-2/realtime-k |ernel-rt=affected,mrg-2/rea
+#                |ernel=affected,rhelsa-7/ker |ltime-kernel=affected,rhels
+#                |nel-pegas=affected,fedora-a |a-7/kernel-pegas=affected,f
+#                |ll/kernel=affected          |edora-all/kernel=affected
+#
+# Then run the script.
+
+RED=$( tput setaf 196 )
+GREEN=$( tput setaf 82 )
+RESET=$( tput sgr0 )
+
+# Take data from Clipboard
+command -v xsel &> /dev/null || { echo "'xsel' command required but not installed."; exit 1; }
+data=$( xsel --clipboard )
+
+# Remove whitespaces and unnecessary characters
+data=$( sed -r -e 's/^[ ]+(Whiteboard)?\|//g' \
+               -e 's/[ ]+\|/|/g' \
+               -e 's/[ ]*$//g' \
+        <<< "$data" )
+
+# Read to array by replacing '\n' with '|' too
+IFS='|' read -ra array <<< "${data//$'\n'/|}"
+
+# Split array to two
+for (( i = 0; i < "${#array[@]}"; i++ )); do
+    if (( i % 2 == 0 )); then
+        first[i / 2]="${array[i]}"
+    else
+        second[i / 2]="${array[i]}"
+    fi
+done
+
+# Join arrays to strings
+IFS='' left="${first[*]}"
+IFS='' right="${second[*]}"
+
+# Diff separated by ','
+diff <( echo "${left//,/$'\n'}" ) <( echo "${right//,/$'\n'}" ) \
+| sed -r -e "s/^< (.*)$/$RED\1$RESET/g" -e "s/^> (.*)$/$GREEN\1$RESET/g"

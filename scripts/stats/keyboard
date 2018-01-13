@@ -1,0 +1,29 @@
+#!/bin/bash
+
+read_layout() {
+    layout=$( setxkbmap -query | sed -r -n 's/layout:[[:space:]]+(.*)/\1/p' )
+}
+
+layout_toggle() {
+    read_layout
+    if [[ "$layout" == "us" ]]; then
+        setxkbmap -model pc104 -layout cz -variant qwerty -option grp:caps_toggle
+    else
+        setxkbmap -model pc104 -layout us -option grp:caps_toggle
+    fi   
+}
+
+if [[ "$1" == "toggle" ]]; then
+    layout_toggle
+    pkill -RTMIN+3 i3blocks
+    exit 0
+fi
+
+if [[ "$BLOCK_BUTTON" ]]; then
+    if [[ "$BLOCK_BUTTON" == "1" ]]; then
+        layout_toggle
+    fi
+fi
+
+read_layout
+echo " $layout"

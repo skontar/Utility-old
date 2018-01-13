@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo dnf remove flash-plugin
+sudo dnf remove adobe-release

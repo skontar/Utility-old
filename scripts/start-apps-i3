@@ -1,0 +1,14 @@
+#!/bin/bash
+
+pgrep thunderbird || thunderbird &
+pgrep doublecmd || doublecmd &
+pgrep pycharm || pycharm &
+pgrep firefox || firefox &
+pgrep hexchat || hexchat &
+# pgrep mcheck || ~/Python/Mcheck/mcheck.py &
+pgrep xfce4-terminal || i3-msg 'workspace "6:  "; exec xfce4-terminal; exec xfce4-terminal'
+
+sleep 20
+for win in $(wmctrl -l | awk -F' ' '{print $1}'); do
+    wmctrl -i -r $win -b remove,demands_attention
+done

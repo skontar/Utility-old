@@ -1,0 +1,5 @@
+#!/bin/bash
+
+lock
+wmctrl -c "KeePassXC"
+systemctl suspend

@@ -1,0 +1,87 @@
+conky.config={
+    alignment = 'top_right',
+    default_bar_height = 5,
+    default_color = 'white',
+    default_graph_height = 32,
+    default_graph_width = 135,
+    default_shade_color = 'black',
+    double_buffer = true,
+    draw_shades = true,
+    draw_graph_borders = true,
+    font = 'Liberation Sans:Bold:size=10',
+    gap_x = 15,
+    gap_y = 15,
+    if_up_strictness = 'link',
+    minimum_width = 275,
+    maximum_width = 275,
+    override_utf8_locale = true,
+    own_window = true,
+    own_window_type = 'normal',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_transparent = true,
+    update_interval = 2.0,
+    update_interval_on_battery = 4.0,
+    uppercase = true,
+    use_xft = true,
+}
+
+conky.text = [[
+SYSTEM ${hr}
+
+Kernel: ${alignr}${kernel}
+Uptime: ${alignr}${uptime}
+Sys Temp: ${alignr}${acpitemp}°C
+CPU Temp: ${alignr}${hwmon 2 temp 1}°C
+
+CPU: ${alignr}${freq} MHz
+Processes: ${alignr}${processes} (${running_processes} running)
+Load: ${alignr}${loadavg}
+
+CPU1 ${alignr}${cpu cpu1}%
+${cpubar cpu1}
+CPU2 ${alignr}${cpu cpu2}%
+${cpubar cpu2}
+CPU3 ${alignr}${cpu cpu3}%
+${cpubar cpu3}
+CPU4 ${alignr}${cpu cpu4}%
+${cpubar cpu4}
+
+Ram ${alignr}${mem} / ${memmax} (${memperc}%)
+${membar}
+Swap ${alignr}${swap} / ${swapmax} (${swapperc}%)
+${swapbar}
+
+Highest CPU
+${top name 1}${alignr}${top cpu 1}%
+${top name 2}${alignr}${top cpu 2}%
+${top name 3}${alignr}${top cpu 3}%
+
+Highest MEM
+${top_mem name 1}${alignr}${top_mem mem_res 1}
+${top_mem name 2}${alignr}${top_mem mem_res 2}
+${top_mem name 3}${alignr}${top_mem mem_res 3}
+
+Battery ${alignr}${battery_percent BAT1}%
+${battery_bar BAT1}
+
+FILESYSTEM ${hr}
+
+Root: ${alignr}Free ${fs_free /} / ${fs_size /}
+${fs_bar /}
+Home: ${alignr}Free ${fs_free /home} / ${fs_size /home}
+${fs_bar /home}
+
+NETWORK ${hr}
+${if_up enp0s25}
+Ethernet:${alignr}${addr enp0s25}
+Down ${downspeed enp0s25} /s ${alignr}Up ${upspeed enp0s25} /s
+${downspeedgraph enp0s25 -l} ${alignr}${upspeedgraph enp0s25 -l}
+Total ${totaldown enp0s25} ${alignr}Total ${totalup enp0s25}
+${endif}
+${if_up wlp3s0}Wireless:${alignr}${addr wlp3s0}
+${wireless_essid wlp3s0}
+${wireless_link_bar wlp3s0}
+Down ${downspeed wlp3s0} /s ${alignr}Up ${upspeed wlp3s0} /s
+${downspeedgraph wlp3s0 -l} ${alignr}${upspeedgraph wlp3s0 -l}
+Total ${totaldown wlp3s0} ${alignr}Total ${totalup wlp3s0}${endif}
+]]

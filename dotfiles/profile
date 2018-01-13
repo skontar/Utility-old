@@ -1,0 +1,10 @@
+# .profile 
+
+# Executable scripts
+export PATH=$PATH:~/Utility/scripts:~/Utility/bin:~/Repos/insights-tools/development;
+
+# Python libraries
+export PYTHONPATH=$PYTHONPATH:/home/skontar/Python/Libraries
+
+# Qt5 style
+export QT_QPA_PLATFORMTHEME="qt5ct"

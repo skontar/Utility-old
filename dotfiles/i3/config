@@ -1,0 +1,260 @@
+# i3-gaps config
+
+# Window titles
+font pango: Droid Sans 11
+
+
+# Theme
+
+# Default
+# class                 border  backgr. text    indicator child_border
+# client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+# client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+# client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+# client.urgent           #2f343a #900000 #ffffff #900000   #900000
+# client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+# client.background       #ffffff
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #4c7899 #285577 #ffffff #268bd9   #268bd9
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.background       #ffffff
+
+
+# Gaps
+gaps inner 10
+gaps outer 0
+smart_gaps on
+
+
+# Modificator
+set $mod Mod4
+
+
+# Mouse handling
+focus_follows_mouse no
+mouse_warping none
+
+
+# Workspaces
+set $ws1 "1:  "
+set $ws2 "2:  "
+set $ws3 "3:  "
+set $ws4 "4:  "
+set $ws5 "5:  "
+set $ws6 "6:  "
+set $ws7 "7: 7 "
+set $ws8 "8: 8 "
+set $ws9 "9: 9 "
+set $ws10 "10:  "
+
+# Use keycodes to make sure it works on different layouts
+# bindsym $mod+1 workspace $ws1
+bindcode $mod+10 workspace $ws1
+bindcode $mod+11 workspace $ws2
+bindcode $mod+12 workspace $ws3
+bindcode $mod+13 workspace $ws4
+bindcode $mod+14 workspace $ws5
+bindcode $mod+15 workspace $ws6
+bindcode $mod+16 workspace $ws7
+bindcode $mod+17 workspace $ws8
+bindcode $mod+18 workspace $ws9
+bindcode $mod+19 workspace $ws10
+
+bindcode $mod+Shift+10 move container to workspace $ws1, workspace $ws1
+bindcode $mod+Shift+11 move container to workspace $ws2, workspace $ws2
+bindcode $mod+Shift+12 move container to workspace $ws3, workspace $ws3
+bindcode $mod+Shift+13 move container to workspace $ws4, workspace $ws4
+bindcode $mod+Shift+14 move container to workspace $ws5, workspace $ws5
+bindcode $mod+Shift+15 move container to workspace $ws6, workspace $ws6
+bindcode $mod+Shift+16 move container to workspace $ws7, workspace $ws7
+bindcode $mod+Shift+17 move container to workspace $ws8, workspace $ws8
+bindcode $mod+Shift+18 move container to workspace $ws9, workspace $ws9
+bindcode $mod+Shift+19 move container to workspace $ws10, workspace $ws10
+
+
+workspace $ws4 output DP2-1
+
+
+# Windows
+floating_modifier $mod
+focus_on_window_activation focus
+
+for_window [class=".*"] title_format " <b>%title</b>"
+for_window [class=".*"] border pixel 3
+for_window [class="Pavucontrol"] floating enable, move position mouse, move up 32 px
+for_window [class="Xfce4-power-manager-settings"] floating enable, move position mouse, move up 32 px
+for_window [class="Yad"] floating enable
+for_window [class="Yad" title="(Calendar|Top|Disk) popup"] move position mouse, move up 32 px
+for_window [class="Xfce4-terminal" window_role="floating"] floating enable
+for_window [class="Thunderbird" window_role="Msgcompose"] focus
+for_window [class="Doublecmd"] floating enable
+for_window [class="Doublecmd" title="^Double Commander 0.*$"] floating disable
+for_window [class="keepassxc" title="Auto"] resize set 600 400, move position center
+for_window [class="VirtualBox" title="- Oracle VM VirtualBox"] floating enable
+
+assign [class="Thunderbird"] $ws1
+assign [class="Doublecmd"] $ws2
+assign [class="jetbrains-pycharm-ce"] $ws3
+assign [class="Firefox"] $ws4
+assign [class="Hexchat"] $ws5
+assign [class="keepassxc" title="^(?!Auto).*"] $ws10
+
+
+# Keybindings - WM
+bindsym $mod+Shift+q           kill
+bindsym Mod1+F4                kill
+bindsym $mod+Left              focus left
+bindsym $mod+Down              focus down
+bindsym $mod+Up                focus up
+bindsym $mod+Right             focus right
+bindsym $mod+Shift+Left        move left
+bindsym $mod+Shift+Down        move down
+bindsym $mod+Shift+Up          move up
+bindsym $mod+Shift+Right       move right
+bindsym $mod+Shift+space       floating toggle
+bindsym $mod+space             focus mode_toggle
+bindsym $mod+Prior             focus parent
+bindsym $mod+Next              focus child
+bindsym $mod+Shift+c           reload
+bindsym $mod+Shift+r           restart
+bindsym $mod+Ctrl+Left         move workspace to output left
+bindsym $mod+Ctrl+Right        move workspace to output right
+bindsym $mod+Shift+minus       move scratchpad
+# bindsym $mod+Shift+plus        scratchpad show
+bindsym $mod+h                 split h
+bindsym $mod+v                 split v
+bindsym $mod+w                 layout toggle
+bindsym $mod+e                 layout toggle split
+bindsym $mod+f                 fullscreen toggle
+bindsym $mod+u                 [urgent=latest] focus
+bindsym --release $mod+Escape  exec xkill
+
+# Keybindings - applications
+bindsym $mod+Return            exec xfce4-terminal
+bindsym F12                    exec xfce4-terminal --drop-down
+bindsym $mod+Alt_L             exec "rofi -show window -modi window,drun,run -sidebar-mode"
+bindsym Mod1+F3                exec "rofi -show drun -modi window,drun,run -sidebar-mode"
+bindsym $mod+d                 exec doublecmd                               
+bindsym $mod+i                 exec firefox                               
+bindsym $mod+t                 exec thunderbird                               
+bindsym $mod+y                 exec pycharm                                
+bindsym $mod+c                 exec hexchat                               
+bindsym $mod+g                 exec geany                               
+bindsym Print                  exec xfce4-screenshooter
+
+# Keybindings - scripts        
+bindsym $mod+k                 exec xfce4-terminal --role floating -x kerberos
+bindsym $mod+o                 exec --no-startup-id toggle-dropbox
+bindsym $mod+p                 exec --no-startup-id presentation-switch
+bindsym $mod+comma             exec --no-startup-id displays-i3 
+bindsym $mod+period            exec --no-startup-id "displays-i3 1; pkill -RTMIN+1 i3blocks"
+bindsym $mod+slash             exec --no-startup-id "displays-i3 2; pkill -RTMIN+1 i3blocks"
+bindsym $mod+m                 exec --no-startup-id "displays-i3 3; pkill -RTMIN+1 i3blocks"
+bindsym $mod+n                 exec --no-startup-id vpn-connect
+bindsym $mod+s                 exec --no-startup-id start-apps-i3
+bindsym $mod+less              exec people-search
+bindsym $mod+grave             exec xfce4-terminal --role floating -x remote-mount --nohup
+bindsym $mod+l                 exec --no-startup-id lock
+bindsym $mod+z                 exec xfce4-terminal --role floating -x ssh-unlock
+bindsym --release $mod+a       exec --no-startup-id keepass-autotype-layout
+
+# Keybindings - system
+bindsym XF86AudioRaiseVolume   exec --no-startup-id ~/Utility/scripts/stats/volume up
+bindsym XF86AudioLowerVolume   exec --no-startup-id ~/Utility/scripts/stats/volume down
+bindsym XF86AudioMute          exec --no-startup-id ~/Utility/scripts/stats/volume mute
+bindsym XF86MonBrightnessUp    exec --no-startup-id sudo ~/Utility/scripts/stats/brightness up
+bindsym XF86MonBrightnessDown  exec --no-startup-id sudo ~/Utility/scripts/stats/brightness down
+bindsym Caps_Lock              exec --no-startup-id ~/Utility/scripts/stats/keyboard toggle
+
+# Power mode
+set $mode_power <b> <u>L</u>ogout | <u>S</u>uspend | <u>R</u>estart | <u>P</u>oweroff </b>
+mode --pango_markup "$mode_power" {
+    bindsym l mode "default", exec --no-startup-id i3-msg exit
+    bindsym s mode "default", exec --no-startup-id lock-suspend
+    bindsym r mode "default", exec --no-startup-id systemctl reboot
+    bindsym p mode "default", exec --no-startup-id systemctl poweroff
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+x mode "$mode_power"
+
+# Edit mode
+set $mode_edit <b> Edit: <u>C</u>onfig | <u>B</u>locks </b>
+mode --pango_markup "$mode_edit" {
+    bindsym c mode "default", exec geany ~/.config/i3/config
+    bindsym b mode "default", exec geany ~/.config/i3blocks/config
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+q mode "$mode_edit"
+
+
+# Resize mode
+set $mode_resize <b> Resize </b>
+mode --pango_markup "$mode_resize" {
+    bindsym Left resize shrink width 20 px or 2 ppt
+    bindsym Down resize grow height 20 px or 2 ppt
+    bindsym Up resize shrink height 20 px or 2 ppt
+    bindsym Right resize grow width 20 px or 2 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "$mode_resize"
+
+# Status bar
+bar {
+    output eDP1
+    output HDMI1
+    output DP2-2
+    font pango: Hack, FontAwesome 11
+    height 32
+    tray_output primary
+    tray_padding 4
+    status_command i3blocks
+    i3bar_command i3bar -t
+    colors {
+        background         #00000099
+    }
+    strip_workspace_numbers yes
+}
+
+bar {
+    output DP2-1
+    font pango: Hack, FontAwesome 11
+    height 32
+    tray_output none
+    binding_mode_indicator no
+    i3bar_command i3bar -t
+    colors {
+        background         #00000099
+    }
+    strip_workspace_numbers yes
+}
+
+# Startup
+exec_always --no-startup-id synclient TapButton1=1
+exec_always --no-startup-id synclient TapButton2=3
+exec_always --no-startup-id synclient TapButton3=2
+exec_always --no-startup-id "setxkbmap -model pc104 -layout us -option grp:caps_toggle"
+exec --no-startup-id ssh-agent &
+exec --no-startup-id pulseaudio -D
+exec --no-startup-id nm-applet &
+exec --no-startup-id xfce4-power-manager
+exec --no-startup-id xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/presentation-mode -s false
+exec --no-startup-id ksuperkey -e 'Super_L=Alt_L|F3;Super_R=Alt_R|F3' 
+exec --no-startup-id update-checker &
+exec --no-startup-id sudo acpid
+exec --no-startup-id parcellite -d -n
+exec --no-startup-id udiskie -2 -s &
+exec --no-startup-id xautolock -locker lock &
+exec_always --no-startup-id feh --bg-scale ~/Documents/Wallpapers/Dual/Converted/blue_planets_left.jpg --bg-scale ~/Documents/Wallpapers/Dual/Converted/blue_planets_right.jpg 
+exec_always --no-startup-id "pkill compton; sleep 0.5; compton -b"
+exec --no-startup-id "sleep 5; pkill -RTMIN+2 i3blocks"
+exec --no-startup-id presence &

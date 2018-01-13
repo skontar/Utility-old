@@ -1,0 +1,66 @@
+#!/bin/bash
+
+if [[ $BLOCK_BUTTON == "1" ]]; then
+    if ! wmctrl -F -c "Top popup"; then
+        notify-send -t 2000 "Counting processes..."
+    
+        # cpu=$( ps xo comm,%cpu --sort=-%cpu --no-headers | head -n 5 )
+        # filtered_cpu=$( awk '
+            # BEGIN { printf "%-17s %5s", "COMMAND", "CPU%" } 
+            # { 
+                # printf "\n%-17s %4.1f%", $1, $2 / 4 
+            # }' <<< "$cpu" )
+    
+        top=$( top -bn2 ) 
+        filtered_cpu=$( awk '
+          BEGIN { 
+            headers = 0
+            lines = 0 
+            printf "%-17s %5s", "COMMAND", "CPU%" 
+          } 
+           
+          { 
+            if (headers == 2 && lines < 5) {
+              lines++
+              printf "\n%-17s %4.1f%", $12, $9 / 4
+            }
+          }
+           
+          /PID USER      PR/ {
+            headers++
+          }' <<< "$top" )
+        
+        mem=$( ps axo comm,rss --sort=-%mem --no-headers | head -n 5 )
+        filtered_mem=$( awk '
+          BEGIN { printf "%-17s %5s", "COMMAND", "RSS" }
+          
+          {
+                name=$1
+                for (i = 2; i < NF; i++) {
+                    name=name" "$i
+                }
+              
+            if(int($NF / 1024 / 1024)) { 
+              printf "\n%-17s %3.1fGB", name, $NF / 1024 / 1024
+            } 
+            else if(int($NF / 1024 / 1000)) { 
+              printf "\n%-17s %3.1fGB", name, 1.0  # to avoid 1010MB etc.
+            }
+            else if (int($NF / 1024 )) { 
+              printf "\n%-17s %3dMB", name, int($NF / 1024) 
+            } 
+            else if (int($NF / 1000 )) { 
+              printf "\n%-17s %3dMB", name, 1.0  # to avoid 1005kB etc.
+            } 
+            else {
+              printf "\n%-17s %3dkB", name, int($NF)
+            } 
+          }' <<< "$mem" )
+        
+        printf "%s\n\n%s" "$filtered_cpu" "$filtered_mem" | yad --text-info --width 220 --height 220 --no-buttons --title "Top popup" &
+    fi
+fi
+
+used_memory=$( free -h | sed -r -n 's/^Mem:[[:space:]]+[^[:space:]]+[[:space:]]+([^[:space:]]+).*$/\1/p' )
+
+echo " $used_memory"

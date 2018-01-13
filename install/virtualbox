@@ -1,0 +1,12 @@
+#!/bin/bash
+
+sudo dnf install kernel-devel-$(uname -r) kernel-headers-$(uname -r) gcc
+
+echo "Insert the ISO of VirtualBox guest additions"
+read -p "Press ENTER when ready"
+
+mount /dev/cdrom /mnt/dvd
+/mnt/dvd/VBoxLinuxAdditions.run
+
+echo "Check VirtualBox guest additions install"
+read -p "Press ENTER when ready"

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+nmcli con up id "Brno (BRQ)"

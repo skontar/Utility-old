@@ -1,0 +1,27 @@
+#!/bin/bash
+
+. dotfiles
+
+mkdir --parents ~/.themes
+mkdir --parents ~/.icons
+mkdir --parents ~/.fonts
+mkdir --parents ~/.config/fontconfig/
+mkdir --parents ~/.config/xfce4/xfconf/xfce-perchannel-xml
+
+nr_of_elements=${#FILES[@]}
+for (( i = 0; i < nr_of_elements; i += 2 )); do
+    file=${FILES[i]}
+    target=${FILES[i + 1]}
+    file_expanded="$DOTFILES/$file"
+    target_expanded="${target/#\~/$HOME}"
+    
+    if [[ -L "$target_expanded" ]]; then
+        echo "$target exists"
+    else
+        echo "$file -> $target"
+        if [[ -e "$target_expanded" && ! -e "$target_expanded.bak" ]]; then
+            mv "$target_expanded" "$target_expanded.bak"
+        fi
+        ln -s "$file_expanded" "$target_expanded"
+    fi
+done

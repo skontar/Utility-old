@@ -1,0 +1,102 @@
+#!/bin/bash
+
+mute_color="#808080"
+percentages=( $( seq 0 5 100 ) )
+
+
+read_info() {
+    info=$( pacmd list-sinks )
+    lines=$( grep -E '(\* index:)|(^[[:space:]]*volume:|muted:)' <<< "$info" )
+    IFS=$'\n' read -d '' -a sink_data <<< "$lines"
+    for (( i=0; i < ${#sink_data[@]}; i++ )); do
+        if [[ ${sink_data[i]} =~ 'index:' ]]; then
+            break
+        fi
+    done
+    volume=$( sed -r -n 's/^.*[[:space:]]+([[:digit:]]+)%.*$/\1/p' <<< "${sink_data[i + 1]}" )
+    grep -E -q 'Headphones [^\)]+available: yes' <<< "$info"
+    headphones_connected=$(( !$? )) 
+}
+
+
+volume_up() {
+    read_info
+    search_value=$(( volume + 2 ))
+    if (( search_value >= percentages[-1] )); then
+        new_value=${percentages[-1]}
+    else
+        for (( i = 0; i < ${#percentages[@]}; i++ )); do
+            if (( percentages[i] > search_value )); then
+                new_value=${percentages[i]}
+                break
+            fi
+        done
+    fi
+    pactl set-sink-volume @DEFAULT_SINK@ "$new_value"%
+}
+
+
+volume_down() {
+    read_info
+    new_volume=$(( volume - 5 ))
+    if (( new_volume < 0 )); then
+        new_volume=0
+    fi
+    pactl set-sink-volume @DEFAULT_SINK@ "$new_volume"%
+}
+
+
+mute_toggle() {
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+}
+
+
+if [[ "$1" ]]; then
+    if [[ "$1" == "up" ]]; then
+        volume_up
+    elif [[ "$1" == "down" ]]; then
+        volume_down
+    else
+        mute_toggle
+    fi
+    pkill -RTMIN+2 i3blocks
+    exit 0
+fi
+
+if [[ "$BLOCK_BUTTON" ]]; then
+    if [[ "$BLOCK_BUTTON" == "1" ]]; then
+        pkill pavucontrol || pavucontrol &
+    elif [[ "$BLOCK_BUTTON" == "3" ]]; then
+        mute_toggle
+    elif [[ "$BLOCK_BUTTON" == "4" ]]; then
+        volume_up
+    elif [[ "$BLOCK_BUTTON" == "5" ]]; then
+        volume_down
+    fi
+fi
+
+read_info
+
+if [[ "${sink_data[i + 2]}" =~ 'yes' ]]; then
+    muted=1
+fi
+
+if (( headphones_connected )); then
+    icon=""
+elif (( muted )); then
+    icon=""
+elif (( volume > 50 )); then
+    icon=""
+elif (( volume > 0 )); then
+    icon=""
+else
+    icon=""
+fi
+
+if (( muted )); then
+    text="<span color=\"$mute_color\">$icon $volume%</span>"
+else
+    text="$icon $volume%"
+fi
+
+echo "$text"

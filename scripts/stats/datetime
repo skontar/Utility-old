@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ $BLOCK_BUTTON == "1" ]]; then
+    if ! wmctrl -F -c "Calendar popup"; then
+        yad --calendar --no-buttons --title "Calendar popup" &
+    fi
+fi
+
+date +"  %a %-e %b  <b>%-k:%M</b>"
+date +" <b>%-k:%M</b>"

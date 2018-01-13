@@ -1,0 +1,51 @@
+#!/bin/bash
+
+if [[ $BLOCK_BUTTON == "1" ]]; then
+    pkill -f xfce4-power-manager-settings || xfce4-power-manager-settings &
+fi
+
+battery_weak_color="#ffff00"
+battery_empty_color="#ff0000"
+
+online=$( </sys/class/power_supply/AC/online )
+energy_full_0=$( </sys/class/power_supply/BAT0/energy_full )
+energy_now_0=$( </sys/class/power_supply/BAT0/energy_now )
+power_now_0=$( </sys/class/power_supply/BAT0/power_now )
+energy_full_1=$( </sys/class/power_supply/BAT1/energy_full )
+energy_now_1=$( </sys/class/power_supply/BAT1/energy_now )
+power_now_1=$( </sys/class/power_supply/BAT1/power_now )
+
+percentage=$(( 100 * (energy_now_0 + energy_now_1) / (energy_full_0 + energy_full_1) ))
+
+# Handle system statistics inaccuracies
+if (( percentage >= 95 )); then
+    percentage=100
+fi
+
+if (( percentage > 80 )); then
+    battery=""
+elif (( percentage > 60 )); then
+    battery=""
+elif (( percentage > 40 )); then
+    battery=""
+elif (( percentage > 20 )); then
+    battery=""
+else
+    battery=""
+fi
+
+if (( online )); then
+    ac=""
+else
+    minutes=$(( 60 * (energy_now_0 + energy_now_1) / (power_now_0 + power_now_1) ))
+    hours=$(( minutes / 60 ))
+    minutes_reminder=$(( minutes % 60 ))
+    time=$( printf " %d:%02d" "$hours" "$minutes_reminder" )
+    if (( hours < 1 )); then
+        battery="<span color=\"$battery_empty_color\">$battery</span>"
+    elif (( hours < 2 )); then
+        battery="<span color=\"$battery_weak_color\">$battery</span>"
+    fi
+fi
+
+echo "$battery$ac $percentage%$time"

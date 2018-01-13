@@ -1,0 +1,14 @@
+[user]
+	name = Stanislav Kontar
+	email = skontar@redhat.com
+[diff]
+	tool = meld
+[merge]
+	tool = meld
+[color]
+	ui = auto
+[push]
+	default = simple
+[alias]
+[core]
+	askpass = 

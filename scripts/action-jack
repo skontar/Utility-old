@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# /etc/acpi/events/jackconf
+#
+# event=jack/headphone
+# action=/etc/acpi/actions/jack.sh "%e"
+
+# /etc/acpi/actions/jack.sh
+# 
+# #!/bin/bash
+# 
+# su -lc "DISPLAY=:0.0 action-jack \"$1\"" skontar
+
+# jack/headphone HEADPHONE plug
+# jack/headphone HEADPHONE unplug
+
+
+# Debugging
+echo "$( date +"%-k:%M:%S" ) Jack! *$1*" >> ~/jack.log
+
+pkill -RTMIN+2 i3blocks

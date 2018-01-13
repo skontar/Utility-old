@@ -1,0 +1,197 @@
+#!/bin/bash
+
+. functions
+
+# See groups: dnf group list hidden -v
+
+# Main system
+install @standard
+install @hardware-support
+install @multimedia
+install @fonts
+install @networkmanager-submodules
+install @base-x
+
+# Office
+install @libreoffice
+
+# Basic desktop
+install lightdm-gtk
+install breeze-cursor-theme
+install elementary-xfce-icon-theme
+install greybird-gtk2-theme
+install greybird-gtk3-theme
+install lxappearance
+install xfce4-terminal
+install i3lock
+
+# Fonts
+install google-droid-serif-fonts
+install google-droid-sans-fonts 
+install google-droid-sans-mono-fonts
+install adobe-source-code-pro-fonts
+install linux-libertine-fonts 
+install linux-libertine-biolinum-fonts 
+install google-croscore-arimo-fonts 
+install google-croscore-cousine-fonts
+install google-croscore-tinos-fonts
+install google-crosextra-caladea-fonts
+install google-crosextra-carlito-fonts
+
+
+# Better font rendering with sub-pixel smoothing
+install freetype-freeworld
+
+# System tools
+install setroubleshoot
+install setools
+install python3-dnf-plugins-extras-leaves
+install qt-config
+install qt5ct
+install pavucontrol
+install wmctrl
+install xdotool
+install NetworkManager-openvpn 
+install NetworkManager-openvpn-gnome
+
+# CLI applications
+install htop
+install mc 
+install NetworkManager-tui
+install inxi
+install numlockx
+install ffmpeg 
+install youtube-dl 
+install livestreamer
+
+# GUI applications
+install geany
+install geany-plugins-geanyextrasel
+install geany-plugins-spellcheck
+install gparted
+install xarchiver
+install xfburn
+install viewnior 
+install firefox
+install google-chrome-stable
+install doublecmd-gtk 
+install speedcrunch 
+install smplayer
+install evince
+install audacity-freeworld 
+install vlc
+install thunderbird 
+install VirtualBox
+install sqliteman
+install meld
+install keepassxc
+install dropbox
+
+
+# From source
+mkdir --parents ~/Utility/bin
+mkdir --parents ~/Utility/repos
+cd ~/Utility/repos
+
+echo "==> i3-gaps (from Git / Zip):"
+read -rsn1 response
+if [[ "$response" == [gG] ]]; then
+    install dh-autoreconf
+    install libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel libev-devel xcb-util-cursor-devel libXinerama-devel libxkbcommon-devel libxkbcommon-x11-devel pcre-devel pango-devel git gcc
+
+    git clone https://www.github.com/Airblader/i3 i3-gaps
+    cd i3-gaps
+    autoreconf --force --install
+    rm -rf build/
+    mkdir -p build && cd build/
+    ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
+    make
+    sudo make install
+    cd ../..
+else
+    tar -zxf ../dotfiles/i3-gaps.tgz
+    cd i3-gaps/build
+    sudo make install
+    cd ../..
+fi
+
+echo "==> i3blocks-gaps (from Git / Zip):"
+read -rsn1 response
+if [[ "$response" == [gG] ]]; then
+    hit clone https://github.com/Airblader/i3blocks-gaps.git
+    cd i3blocks-gaps
+    make all
+    sudo make install
+    cd ..
+else
+    cd i3blocks-gaps
+    tar -zxf ../dotfiles/i3blocks-gaps.tgz
+    sudo make install
+    cd ..
+fi
+
+echo "==> compton (from Git / Zip):"
+read -rsn1 response
+if [[ "$response" == [gG] ]]; then
+    git clone https://github.com/chjj/compton.git
+    ( cd compton; make )
+else
+    tar -zxf ../dotfiles/compton.tgz
+fi
+ln -s ~/Utility/repos/compton/compton ~/Utility/bin/compton
+
+echo "==> gtk3-nocsd (from Git / Zip):"
+read -rsn1 response
+if [[ "$response" == [gG] ]]; then
+    git clone https://github.com/PCMan/gtk3-nocsd.git
+    install pkgconfig
+    install gtk3-devel
+    install gtk+-devel
+    install gobject-introspection-devel
+    ( cd gtk3-nocsd; make )
+else
+    tar -zxf ../zips/gtk3-nocsd.tgz
+fi
+ln -s ~/Utility/repos/gtk3-nocsd/gtk3-nocsd ~/Utility/bin/gtk3-nocsd
+
+echo "==> ksuperkey (from Git / Zip):"
+read -rsn1 response
+if [[ "$response" == [gG] ]]; then
+    git clone https://github.com/hanschen/ksuperkey.git
+    ( cd ksuperkey; make )
+
+else
+    tar -zxf ../zips/ksuperkey.tgz
+fi
+ln -s ~/Utility/repos/ksuperkey/ksuperkey ~/Utility/bin/ksuperkey
+
+echo "==> presentation-switch (from Git / Zip):"
+read -rsn1 response
+if [[ "$response" == [gG] ]]; then
+    git clone https://github.com/skontar/presentation-switch.git
+else
+    tar -zxf ../zips/presentation-switch.tgz
+fi
+ln -s ~/Utility/repos/presentation-switch/presentation_switch.py ~/Utility/bin/presentation-switch
+
+echo "==> update-checker (from Git / Zip):"
+read -rsn1 response
+if [[ "$response" == [gG] ]]; then
+    git clone https://github.com/skontar/update-checker.git
+else
+    tar -zxf ../zips/update-checker.tgz
+fi
+ln -s ~/Utility/repos/update-checker/update_checker.py ~/Utility/bin/update-checker
+
+echo "==> bash-git-prompt (from Git / Zip):"
+read -rsn1 response
+if [[ "$response" == [gG] ]]; then
+    git clone https://github.com/magicmonty/bash-git-prompt.git
+else
+    tar -zxf ../zips/bash-git-prompt.tgz
+fi
+
+# Tweaks
+sudo systemctl enable lightdm
+sudo systemctl set-default graphical.target
+    sudo sed -i 's|#greeter-setup-script=|greeter-setup-script=/usr/bin/numlockx on|g' /etc/lightdm/lightdm.conf

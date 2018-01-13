@@ -1,0 +1,21 @@
+#!/bin/bash
+
+window_id=$( xdotool getactivewindow )
+class_text=$( xprop -id ${window_id} | grep CLASS )
+
+# GTK3 windows need activating first
+# Detect the class using `xprop`
+if [[ "$class_text" =~ Firefox ||
+      "$class_text" =~ nm-openvpn-auth-dialog ||
+      "$class_text" =~ Polkit-gnome-authentication-agent-1 ||
+      "$class_text" =~ nm-applet ||
+      "$class_text" =~ xfce4-terminal
+     ]];
+then
+    xdotool windowactivate --sync ${window_id}
+    xdotool keyup super
+    sleep 0.1
+    xdotool key --delay 0 --clearmodifiers $1 
+else
+    xdotool getactivewindow key --delay 0 --clearmodifiers $1
+fi

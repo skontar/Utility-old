@@ -1,0 +1,33 @@
+#!/bin/bash
+
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+RESET="\033[0m"
+
+check_klist() {
+    if klist | grep --quiet Valid ; then
+        echo
+        echo -e "${GREEN}Valid Kerberos ticket${RESET}"
+        echo
+        echo "======================================================================"
+        return 0
+    else
+        echo
+        echo -e "${RED}No valid Kerberos ticket${RESET}"
+        echo
+        echo "======================================================================"
+        return 1
+    fi
+}
+
+echo -e '\033]2;Kerberos\007'  # Change title
+while ! check_klist; do
+    echo
+    { err=$( kinit 2>&1 1>&3- ) ;} 3>&1
+    if [[ "$err" == *"Cannot contact"* ]]; then
+        echo -e "${RED}Outside domain${RESET}"
+        break
+    fi
+done
+echo
+read -p "Press ENTER to close window"

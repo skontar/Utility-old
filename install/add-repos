@@ -1,0 +1,30 @@
+#!/bin/bash
+
+source functions.sh
+
+rpm_fusion_release=27
+doublecmd_release=27
+
+# RPM Fusion
+install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${rpm_fusion_release}.noarch.rpm
+install http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${rpm_fusion_release}.noarch.rpm
+
+# Double Commander
+add_repo http://download.opensuse.org/repositories/home:Alexx2000/Fedora_${doublecmd_release}/home:Alexx2000.repo
+
+# VirtualBox
+add_repo http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
+
+# Chrome
+echo "===> Adding repository Chrome"
+cat << 'EOF' | sudo tee /etc/yum.repos.d/google-chrome.repo
+[google-chrome]
+name=google-chrome
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://dl.google.com/linux/linux_signing_key.pub
+EOF
+
+# Enable read for all users
+sudo chmod +r /etc/yum.repos.d/*

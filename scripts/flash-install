@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo dnf install http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+sudo dnf install flash-plugin

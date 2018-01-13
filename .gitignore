@@ -1,0 +1,13 @@
+bin
+repos
+confidential
+dotfiles/xfce4/xfconf/xfce-perchannel-xml/displays.xml 
+dotfiles/xfce4/xfconf/xfce-perchannel-xml/pointers.xml 
+dotfiles/xfce4/xfconf/xfce-perchannel-xml/thunar.xml 
+dotfiles/xfce4/xfconf/xfce-perchannel-xml/xfce4-appfinder.xml
+dotfiles/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml
+dotfiles/xfce4/xfconf/xfce-perchannel-xml/xfce4-mime-settings.xml
+dotfiles/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+dotfiles/xfce4/xfconf/xfce-perchannel-xml/xfce4-settings-editor.xml
+dotfiles/xfce4/xfconf/xfce-perchannel-xml/xfce4-settings-manager.xml
+dotfiles/xfce4/xfconf/xfce-perchannel-xml/xfdashboard.xml

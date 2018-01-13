@@ -1,0 +1,50 @@
+" Load plugin, indent, and syntax based on file type
+filetype plugin indent on
+
+" Prefered indentation handling
+set autoindent   
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+
+" Appearance
+set number
+set cursorline
+set nowrap
+colorscheme jellybeans-black
+
+" Sensible window splitting
+set splitbelow
+set splitright
+
+" Search without case unless uppercase is used
+set ignorecase
+set smartcase
+
+" Bash-like path completion + menu on third Tab
+set wildmode=longest,list,full
+set wildmenu
+
+" Use clipboard as default register
+set clipboard=unnamedplus
+
+" Change dir to path of opened file
+set autochdir
+
+" Shortcuts
+nnoremap <Space> :let @/=""<CR>
+
+nnoremap <F2> :setlocal number!<CR>
+nnoremap <F3> :setlocal relativenumber!<CR>
+nnoremap <F4> :setlocal wrap! linebreak<CR>
+nnoremap <F5> :setlocal spell! spelllang=en_us<CR>
+
+nnoremap <leader>. :bn<CR>
+nnoremap <leader>, :bp<CR>
+nnoremap <leader>x :bd<CR>
+nnoremap <leader>l :ls<CR>
+
+" Python file handling
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.c,*.h: match BadWhitespace /\s\+$/ | let g:ycm_auto_trigger=1 

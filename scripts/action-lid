@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# /etc/acpi/events/lidconf
+#
+# event=button/lid
+# action=/etc/acpi/actions/lid.sh "%e"
+
+# /etc/acpi/actions/lid.sh
+# 
+# #!/bin/bash
+#
+# su -lc "DISPLAY=:0.0 action-lid \"$1\"" skontar
+
+# button/lid LID close
+# button/lid LID open
+
+
+# Debug
+echo "$( date +"%-k:%M:%S" ) Lid! *$1*" >> ~/lid.log
+
+state=$( cut -d " " -f 3 <<< "$1" )
+if [[ "$state" == "open" ]]; then
+    # If there are no active displays
+    if ! xrandr | grep '*'; then
+        echo "Running 'displays-i3'"
+        displays-i3
+    else
+        echo "Some displays are active"
+    fi
+fi

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+ask () {
+    echo "===> $1? (y/N)"
+    read -rsn1 response
+    return $( [[ "$response" == [yY] ]] )
+}
+
+
+install () {
+    for package in "$@"; do
+        echo "===> Installing $package"
+        sudo dnf install ${package} -y
+    done
+}
+
+remove () {
+    for package in "$@"; do
+        echo "===> Removing $package"
+        sudo dnf remove ${package} -y
+    done
+}
+
+
+ask_install () {
+    for package in "$@"; do
+        if ask "Install package $package"; then
+            sudo dnf install ${package} -y
+        fi
+    done
+}
+
+
+add_repo () {
+    echo "===> Adding repository $1"
+    sudo dnf config-manager --add-repo=$1
+}

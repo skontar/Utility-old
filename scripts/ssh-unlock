@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo -e '\033]2;SSH\007'  # Change title
+
+ssh-add ~/.ssh/id_rsa ~/.ssh/id_rsa_2048
+
+echo
+read -p "Press ENTER to close window"

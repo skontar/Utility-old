@@ -1,0 +1,19 @@
+#!/bin/bash
+
+root_dir="$HOME/Documents/presence"
+
+while true; do
+    if klist | grep --quiet Valid ; then
+        datetime=$( date +%Y-%m-%d-%H-%M )
+        IFS='-' read -r -a array <<< "$datetime"
+        
+        month="${array[0]}-${array[1]}"
+        day="${array[2]}"
+        time="${array[3]}:${array[4]}"
+        
+        target="$root_dir/$month"
+        mkdir -p "$target"
+        echo "$time" >> "$target/$day"
+    fi
+    sleep 60
+done

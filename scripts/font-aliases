@@ -1,0 +1,23 @@
+#!/bin/bash
+
+font_list=(
+    "serif"
+    "sans-serif"
+    "monospace"
+    "Arial"
+    "Helvetica"
+    "Verdana"
+    "Tahoma"
+    "Comic Sans MS"
+    "Times New Roman"
+    "Times"
+    "Courier New"
+    "Courier"
+    "Cantarell"
+    "Roboto Mono"
+)
+
+for family in "${font_list[@]}"; do
+  echo -n "$family: "
+  fc-match "$family"
+done

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+. "${BASH_SOURCE%/*}/../confidential/ssh-to-config.sh"
+
+# Print possible commands
+nr_of_elements=${#COMMAND_LIST[@]}
+for (( i = 0; i < nr_of_elements; i += 2 )); do
+    command_index=$(( i / 2 + 1 ))
+    command_name_upper=${COMMAND_LIST[i]^^}
+    echo "[$command_index] - $command_name_upper"
+done
+
+# Read one character
+read -rsn1 response
+
+# Check and execute command
+nr_of_commands=$(( nr_of_elements / 2 ))
+if (( response > 0 && response <= nr_of_commands )); then
+    index_of_command=$(( response * 2 - 1 ))
+    command="${COMMAND_LIST[index_of_command]}"
+    echo "$command"
+    ${command}
+fi

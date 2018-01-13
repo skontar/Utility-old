@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if pgrep keepassxc; then
+    setxkbmap -model pc104 -layout us -option grp:caps_toggle
+    pkill -RTMIN+3 i3blocks
+    xdotool keyup super
+    xdotool key alt+ctrl+a
+else
+    i3-msg workspace "10:  "
+    keepassxc &
+fi

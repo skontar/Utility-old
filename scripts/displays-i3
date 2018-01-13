@@ -1,0 +1,114 @@
+#!/bin/bash
+
+# Do every xrandr command separated to workaround Fedora bug about not waking some monitors.
+# Change DPI to consistent value so some applications which use it have consistent font sizes.
+
+all_off() {
+    xrandr --output eDP1 --off
+    xrandr --output DP2-2 --off
+    xrandr --output DP2-1 --off
+    xrandr --output HDMI1 --off
+    xrandr --output DP2 --off
+}
+
+single_screen() {
+    xrandr --output HDMI1 --primary --auto
+       
+    xrandr --dpi 96x96
+    notify-send "Single screen" -t 3000
+}
+
+dual_screen() {
+    xrandr --output DP2-2 --primary --auto
+    xrandr --output DP2-1 --auto --right-of DP2-2
+
+    xrandr --dpi 96x96
+    notify-send "Dual Screen" -t 3000
+}
+
+laptop_only() {
+    xrandr --output eDP1 --primary --auto
+
+    xrandr --dpi 96x96
+    notify-send "Laptop only" -t 3000
+}
+
+mirror() {
+    xrandr --output "$1" --primary --mode "$2"
+    xrandr --output eDP1 --same-as "$1" --mode 1920x1080 --scale-from "$2"
+
+    if [[ "$1" != "HDMI1" ]]; then
+        xrandr --output HDMI1 --off
+    fi
+    if [[ "$1" != "DP2" ]]; then
+        xrandr --output DP2 --off
+    fi
+
+    xrandr --dpi 96x96
+    notify-send "Mirror" -t 3000
+}
+
+check_available() {
+    # Mini DisplayPort - preferred
+    if grep -q -s "HDMI1 connected" <<< "$1"; then
+        echo "HDMI1"
+    fi
+    # VGA
+    if grep -q -s "DP2 connected" <<< "$1"; then
+        echo "DP2"
+    fi
+}
+
+kill_apps() {
+    pkill compton
+}
+
+restart_apps() {
+    sleep 2
+    i3-msg restart
+}
+
+get_resolutions() {
+    lines=$( sed -n "/$2 connected/,/connected/p" <<< "$1\nconnected" )
+    sed -n -r -e 's/^  [[:space:]]*([[:digit:]]+x[[:digit:]]+).*$/\1/p' <<< "$lines"
+}
+
+
+notify-send "Changing screens..." -t 2000
+
+kill_apps
+
+case "$1" in
+    1)  all_off
+        single_screen
+        ;;
+    2)  all_off
+        dual_screen
+        ;;
+    3)  xrandr_output=$( xrandr )
+        output_screen=$( check_available "$xrandr_output" )
+        if [[ -n "$output_screen" ]]; then
+            resolutions=( $( get_resolutions "$xrandr_output" "$output_screen" ) )
+            if command -v yad > /dev/null; then
+                selected_resolution=$( yad --list --width=250 --height=200 \
+                                       --title "Select resolution" --no-headers --separator="" \
+                                       --column="" "${resolutions[@]}" )
+                if (( $? != 0 )); then
+                    exit 2
+                fi
+            else
+                notify-send 'You need `yad` installed to select resolution' -t 3000
+                selected_resolution="${resolutions[0]}"
+            fi
+            all_off
+            mirror "$output_screen" "$selected_resolution"
+        else
+            notify-send "No projector connected" -t 3000
+        fi
+        ;;
+    *)  all_off
+        laptop_only
+        ;;
+esac
+
+restart_apps

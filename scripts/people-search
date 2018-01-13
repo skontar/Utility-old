@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [[ -n "$1" ]]; then
+    kerberos="$1"
+else
+    command -v yad &> /dev/null || { echo 'You need `yad` installed'; exit 1; }
+    kerberos=$( yad --entry --text="Kerberos ID" )
+fi
+
+if [[ -n "$kerberos" ]]; then
+    firefox -new-tab "https://people.engineering.redhat.com/employee/$kerberos"
+    firefox -new-tab "https://rover.redhat.com/people/profile/$kerberos/false"  
+fi

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+date
+
+$*
+result=$?
+
+date
+
+notify-send --urgency=critical "Job finished"
+
+exit $result

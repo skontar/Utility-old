@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Layout change must be inlined as xflock4 deletes path
+setxkbmap -model pc104 -layout us -option grp:caps_toggle
+pkill -RTMIN+3 i3blocks
+
+# pkill compton  # Needed so notifications are not over lock screen
+# i3lock -n -i /home/skontar/Documents/Wallpapers/Dual/Converted/blue_planets_both.png  -c 000000 -f
+# compton &
+
+# New version of i3lock fixes this
+/home/skontar/Repos/i3lock/i3lock -i /home/skontar/Documents/Wallpapers/Dual/Converted/blue_planets_both.png -c 000000 -f

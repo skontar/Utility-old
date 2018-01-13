@@ -1,0 +1,18 @@
+#!/bin/bash
+
+top=$( top -bn2 ) 
+awk '
+    BEGIN { headers = 0; lines = 0; printf "%-17s %5s", "COMMAND", "CPU%" } 
+   
+    { 
+        if (headers == 2 && lines < 5) {
+            lines++
+            printf "\n%-17s %4.1f%", $12, $9 / 4
+        }
+    }
+   
+    /PID USER      PR/ {
+        headers++
+    }
+   
+    ' <<< "$top" 

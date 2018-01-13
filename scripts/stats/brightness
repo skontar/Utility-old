@@ -1,0 +1,44 @@
+#!/bin/bash
+
+brightness=$( </sys/class/backlight/intel_backlight/brightness )
+actual_brightness=$( </sys/class/backlight/intel_backlight/actual_brightness )
+max_brightness=$( </sys/class/backlight/intel_backlight/max_brightness )
+
+if [[ "$1" ]]; then
+    percentages=( 3 5 10 20 30 40 50 60 70 80 90 100 )
+    for (( i = 0; i < ${#percentages[@]}; i++ )); do
+        levels[i]=$(( ( percentages[i] * max_brightness + 99) / 100 ))  # round up
+    done
+    if [[ "$1" == "up" ]]; then
+        search_value=$(( actual_brightness + 5 ))
+        if (( search_value >= levels[-1] )); then
+            new_value=${levels[-1]}
+        else
+            for (( i = 0; i < ${#percentages[@]}; i++ )); do
+                if (( levels[i] > search_value )); then
+                    new_value=${levels[i]}
+                    break
+                fi
+            done
+        fi
+    elif [[ "$1" == "down" ]]; then
+        search_value=$(( actual_brightness - 5 ))
+        if (( search_value <= levels[0] )); then
+            new_value=${levels[0]}
+        else
+            for (( i = 0; i < ${#percentages[@]}; i++ )); do
+                if (( levels[i] > search_value )); then
+                    new_value=${levels[i - 1]}
+                    break
+                fi
+            done
+        fi
+    fi
+    echo "$new_value" > /sys/class/backlight/intel_backlight/brightness
+    pkill -RTMIN+1 i3blocks
+    exit 0
+fi
+
+if (( actual_brightness != 0 )); then
+    echo " $(( brightness * 100 / max_brightness ))%"
+fi

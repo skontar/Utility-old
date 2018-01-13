@@ -1,0 +1,67 @@
+# i3blocks config file
+#
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+#
+# List of valid properties:
+#
+# align
+# color
+# background
+# border
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
+# Each block command defaults to the script name to avoid boilerplate.
+command=/home/skontar/Utility/scripts/stats/$BLOCK_NAME
+markup=pango
+separator=false
+separator_block_width=10
+border_top=2
+border_left=0
+border_right=0
+border_bottom=0
+border=#cccccc
+
+[cpu]
+interval=2
+
+[memory]
+interval=5
+
+[disk]
+interval=10
+
+[network]
+interval=5
+
+[brightness]
+interval=once
+signal=1
+
+[volume]
+interval=once
+signal=2
+
+[battery]
+interval=30
+
+[keyboard]
+interval=once
+signal=3
+
+[datetime]
+interval=60

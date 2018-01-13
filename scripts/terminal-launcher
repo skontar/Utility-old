@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xfce4-terminal --tab --drop-down --title=$( pwd | awk -F '/' '{ print $NF }' )
