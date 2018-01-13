@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ..
+git clone git@bitbucket.org:skontar/confidential.git
