@@ -16,3 +16,6 @@ for (( i = 0; i < nr_of_elements; i += 2 )); do
 done
 
 protect "$HOME/Utility/scripts/stats/brightness"
+
+# Symlink to sudo does not work
+visudo

@@ -9,4 +9,4 @@ pkill -RTMIN+3 i3blocks
 # compton &
 
 # New version of i3lock fixes this
-/home/skontar/Repos/i3lock/i3lock -i /home/skontar/Documents/Wallpapers/Dual/Converted/blue_planets_both.png -c 000000 -f
+i3lock -i ~/Utility/confidential/wallpapers/converted/blue_planets_both.png -c 000000 -f

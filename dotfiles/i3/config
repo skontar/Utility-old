@@ -211,6 +211,7 @@ bindsym $mod+r mode "$mode_resize"
 # Status bar
 bar {
     output eDP1
+    output eDP-1
     output HDMI1
     output DP2-2
     font pango: Hack, FontAwesome 11
@@ -254,7 +255,7 @@ exec --no-startup-id sudo acpid
 exec --no-startup-id parcellite -d -n
 exec --no-startup-id udiskie -2 -s &
 exec --no-startup-id xautolock -locker lock &
-exec_always --no-startup-id feh --bg-scale ~/Documents/Wallpapers/Dual/Converted/blue_planets_left.jpg --bg-scale ~/Documents/Wallpapers/Dual/Converted/blue_planets_right.jpg 
+exec_always --no-startup-id feh --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_left.jpg --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_right.jpg 
 exec_always --no-startup-id "pkill compton; sleep 0.5; compton -b"
 exec --no-startup-id "sleep 5; pkill -RTMIN+2 i3blocks"
 exec --no-startup-id presence &
