@@ -14,3 +14,5 @@ for (( i = 0; i < nr_of_elements; i += 2 )); do
     target=${SUDO_FILES[i + 1]}
     handle_file "$file" "$target" "sudo-flag"
 done
+
+protect "$HOME/Utility/scripts/stats/brightness"
