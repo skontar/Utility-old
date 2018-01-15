@@ -3,7 +3,10 @@
 . dotfiles
 
 
-(( EUID == 0 )) || ( echo "Please run as root"; exit )
+if (( EUID != 0 )); then
+    echo "Please run as root"
+    exit
+fi
 
 nr_of_elements=${#SUDO_FILES[@]}
 for (( i = 0; i < nr_of_elements; i += 2 )); do
