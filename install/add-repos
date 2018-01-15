@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source functions.sh
+source functions
 
 rpm_fusion_release=27
 doublecmd_release=27
