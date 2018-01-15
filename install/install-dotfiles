@@ -10,5 +10,4 @@ for (( i = 0; i < nr_of_elements; i += 2 )); do
     handle_file "$file" "$target"
 done
 
-
 protect "$HOME/Utility/scripts/stats/brightness"

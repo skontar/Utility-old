@@ -15,7 +15,7 @@ FILES=(
     "git-prompt-colors.sh" "~/.git-prompt-colors.sh"
     
     "compton.conf" "~/.config/compton.conf"
-    "keepassx2.ini" "~/.config/keepassx/keepassx2.ini"
+    "../confidential/keepassxc.ini" "~/.config/keepassxc/keepassxc.ini"
     "doublecmd.xml" "~/.config/doublecmd/doublecmd.xml"
     
     "xfce4/terminal" "~/.config/xfce4/terminal"
@@ -67,7 +67,7 @@ handle_file() {
 
     file_expanded="$DOTFILES/$file"
     target_expanded="${target/#\~/$HOME}"
-    target_dir="${target_expanded##*/}"
+    target_dir="${target_expanded%/*}"
     
     if [[ ! -d "$target_dir" ]]; then
         mkdir --parents "$target_dir"
