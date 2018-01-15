@@ -54,8 +54,8 @@ SUDO_FILES=(
 
 protect() {
     file_expanded="$1"
-    sudo chown root:root "$file_expanded"
-    sudo chmod o-w "$file_expanded"   
+    chown root:root "$file_expanded"
+    chmod o-w "$file_expanded"   
 }
 
 
