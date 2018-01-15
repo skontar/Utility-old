@@ -47,7 +47,7 @@ sudo_install_files() {
 }
 
 
-install_files "$FILES"
-sudo_install_files "$SUDO_FILES"
+install_files "${FILES[@]}"
+sudo_install_files "${SUDO_FILES[@]}"
 
 protect "~/Utility/scripts/stats/brightness"
