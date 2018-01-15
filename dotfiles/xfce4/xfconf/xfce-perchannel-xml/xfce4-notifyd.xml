@@ -12,6 +12,7 @@
       <value type="string" value="hexchat"/>
       <value type="string" value="Hexchat notification server"/>
       <value type="string" value="mcheck"/>
+      <value type="string" value="nm-applet"/>
       <value type="string" value="notify-send"/>
       <value type="string" value="org.kdenlive.kdenlive"/>
       <value type="string" value="presentation_switch"/>

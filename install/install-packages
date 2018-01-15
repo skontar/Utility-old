@@ -27,6 +27,9 @@ install lxappearance
 install xfce4-terminal
 install i3lock
 install feh
+install yad
+install xfce4-notifyd
+install gnome-keyring  # Needed for network manager
 
 # Fonts
 install hack-fonts
