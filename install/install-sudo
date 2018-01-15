@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+. dotfiles
+
+
+(( EUID == 0 )) || ( echo "Please run as root"; exit )
+
+nr_of_elements=${#SUDO_FILES[@]}
+for (( i = 0; i < nr_of_elements; i += 2 )); do
+    file=${SUDO_FILES[i]}
+    target=${SUDO_FILES[i + 1]}
+    handle_file "$file" "$target" "sudo-flag"
+done

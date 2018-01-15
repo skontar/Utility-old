@@ -3,51 +3,12 @@
 . dotfiles
 
 
-protect() {
-    file_expanded="$1"
-    sudo chown root:root "$file_expanded"
-    sudo chmod o-w "$file_expanded"   
-}
+nr_of_elements=${#FILES[@]}
+for (( i = 0; i < nr_of_elements; i += 2 )); do
+    file=${FILES[i]}
+    target=${FILES[i + 1]}
+    handle_file "$file" "$target"
+done
 
-
-install_files() {
-    files_list=( "$@" )
-
-    nr_of_elements=${#files_list[@]}
-    for (( i = 0; i < nr_of_elements; i += 2 )); do
-        file=${files_list[i]}
-        target=${files_list[i + 1]}
-        file_expanded="$DOTFILES/$file"
-        target_expanded="${target/#\~/$HOME}"
-        target_dir="${target_expanded##*/}"
-        
-        if [[ ! -d "$target_dir" ]]; then
-            mkdir --parents "$target_dir"
-        fi
-            
-        if [[ -L "$target_expanded" ]]; then
-            echo "$target exists"
-        else
-            echo "$file -> $target"
-            if [[ -e "$target_expanded" && ! -e "$target_expanded.bak" ]]; then
-                mv "$target_expanded" "$target_expanded.bak"
-            fi
-            ln -s "$file_expanded" "$target_expanded"
-        fi
-        
-        if [[ "$sudo_flag" ]]; then
-            protect "$file_expanded"
-        fi
-    done
-}
-
-
-sudo_install_files() {
-    sudo install_files "$@"
-}
-
-
-install_files "${FILES[@]}"
-sudo_install_files "${SUDO_FILES[@]}"
 
 protect "$HOME/Utility/scripts/stats/brightness"
