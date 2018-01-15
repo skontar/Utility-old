@@ -1,0 +1,3 @@
+# Run a script on dock events
+event=ibm/hotkey
+action=/etc/acpi/actions/dock.sh "%e"

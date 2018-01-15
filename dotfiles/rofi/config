@@ -1,0 +1,8 @@
+rofi.font: Hack, FontAwesome 14
+rofi.color-enabled: true
+
+rofi.color-enabled: true
+rofi.color-window: #393939, #c1c1c1, #c1c1c1
+rofi.color-normal: #393939, #ffffff, #393939, #ffffff, #393939
+rofi.color-active: #393939, #80cbc4, #393939, #80cbc4, #393939
+rofi.color-urgent: #393939, #ff1844, #393939, #ff1844, #393939

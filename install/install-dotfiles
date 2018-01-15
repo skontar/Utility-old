@@ -2,26 +2,48 @@
 
 . dotfiles
 
-mkdir --parents ~/.themes
-mkdir --parents ~/.icons
-mkdir --parents ~/.fonts
-mkdir --parents ~/.config/fontconfig/
-mkdir --parents ~/.config/xfce4/xfconf/xfce-perchannel-xml
 
-nr_of_elements=${#FILES[@]}
-for (( i = 0; i < nr_of_elements; i += 2 )); do
-    file=${FILES[i]}
-    target=${FILES[i + 1]}
-    file_expanded="$DOTFILES/$file"
-    target_expanded="${target/#\~/$HOME}"
-    
-    if [[ -L "$target_expanded" ]]; then
-        echo "$target exists"
-    else
-        echo "$file -> $target"
-        if [[ -e "$target_expanded" && ! -e "$target_expanded.bak" ]]; then
-            mv "$target_expanded" "$target_expanded.bak"
+protect() {
+    file_expanded="$1"
+    chown root:root "$file_expanded"
+    chmod o-w "$file_expanded"   
+}
+
+
+install_files() {
+    files_list="$1"
+    sudo_flag="$2"
+
+    nr_of_elements=${#files_list[@]}
+    for (( i = 0; i < nr_of_elements; i += 2 )); do
+        file=${files_list[i]}
+        target=${files_list[i + 1]}
+        file_expanded="$DOTFILES/$file"
+        target_expanded="${target/#\~/$HOME}"
+        target_dir="${target_expanded##*/}"
+        
+        if [[ ! -d "$target_dir" ]]; then
+            mkdir --parents "$target_dir"
         fi
-        ln -s "$file_expanded" "$target_expanded"
-    fi
-done
+            
+        if [[ -L "$target_expanded" ]]; then
+            echo "$target exists"
+        else
+            echo "$file -> $target"
+            if [[ -e "$target_expanded" && ! -e "$target_expanded.bak" ]]; then
+                mv "$target_expanded" "$target_expanded.bak"
+            fi
+            ln -s "$file_expanded" "$target_expanded"
+        fi
+        
+        if [[ "$sudo_flag" ]]; then
+            protect "$file_expanded"
+        fi
+    done
+}
+
+
+install_files "$FILES"
+sudo install_files "$SUDO_FILES" "sudo-flag"
+
+protect "~/Utility/scripts/stat/brightness"

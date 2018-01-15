@@ -1,11 +1,7 @@
 #!/bin/bash
 
 cd ~/Utility/repos
-tar -zcf ../zips/i3-gaps.tgz i3-gaps
-tar -zcf ../zips/i3blocks-gaps.tgz i3blocks-gaps
-tar -zcf ../zips/gtk3-nocsd.tgz gtk3-nocsd 
-tar -zcf ../zips/compton.tgz compton 
-tar -zcf ../zips/ksuperkey.tgz ksuperkey 
-tar -zcf ../zips/presentation-switch.tgz presentation-switch 
-tar -zcf ../zips/update-checker.tgz update-checker 
-tar -zcf ../zips/bash-git-prompt.tgz bash-git-prompt
+for repo in *; do
+    tar -zcf "../zips/${repo}.tgz" "$repo"
+done
+

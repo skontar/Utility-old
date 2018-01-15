@@ -22,6 +22,7 @@ FILES=(
     "i3/config" "~/.config/i3/config"
     "i3blocks/config" "~/.config/i3blocks/config"
     "udiskie/config.yml" "~/.config/udiskie/config.yml"
+    "rofi/config" "~/.config/rofi/config"   
     
     "themes/Fenikso" "~/.themes/Fenikso"
     "icons/Breeze-White" "~/.icons/Breeze-White"
@@ -35,4 +36,15 @@ FILES=(
     
     "vimrc" "~/.vimrc"
     "vim" "~/.vim"
+)
+
+SUDO_FILES=(
+    "sudoers" "/etc/sudoers"
+    
+    "acpid/dockconf" "/etc/acpi/events/dockconf"
+    "acpid/dock.sh" "/etc/acpi/actions/dock.sh"
+    "acpid/jackconf" "/etc/acpi/events/jackconf"
+    "acpid/jack.sh" "/etc/acpi/actions/jack.sh"
+    "acpid/lidconf" "/etc/acpi/events/lidconf"
+    "acpid/lid.sh" "/etc/acpi/actions/lid.sh"
 )
