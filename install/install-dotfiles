@@ -1,18 +1,17 @@
-#!/bin/bash
+#!/bin/bash -e
 
 . dotfiles
 
 
 protect() {
     file_expanded="$1"
-    chown root:root "$file_expanded"
-    chmod o-w "$file_expanded"   
+    sudo chown root:root "$file_expanded"
+    sudo chmod o-w "$file_expanded"   
 }
 
 
 install_files() {
-    files_list="$1"
-    sudo_flag="$2"
+    files_list=( "$@" )
 
     nr_of_elements=${#files_list[@]}
     for (( i = 0; i < nr_of_elements; i += 2 )); do
@@ -43,7 +42,12 @@ install_files() {
 }
 
 
-install_files "$FILES"
-sudo install_files "$SUDO_FILES" "sudo-flag"
+sudo_install_files() {
+    sudo install_files "$@"
+}
 
-protect "~/Utility/scripts/stat/brightness"
+
+install_files "$FILES"
+sudo_install_files "$SUDO_FILES"
+
+protect "~/Utility/scripts/stats/brightness"
