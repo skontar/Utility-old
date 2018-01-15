@@ -25,7 +25,7 @@ if [[ "$response" == [gG] ]]; then
     sudo make install
     cd ../..
 else
-    tar -zxf ../dotfiles/i3-gaps.tgz
+    tar -zxf ../zips/i3-gaps.tgz
     cd i3-gaps/build
     sudo make install
     cd ../..
@@ -40,8 +40,8 @@ if [[ "$response" == [gG] ]]; then
     sudo make install
     cd ..
 else
-    cd i3blocks-gaps
     tar -zxf ../zips/i3blocks-gaps.tgz
+    cd i3blocks-gaps
     sudo make install
     cd ..
 fi
@@ -61,10 +61,7 @@ if [[ "$response" == [gG] ]]; then
     make
     cd ../..
 else
-    cd i3blocks-gaps
     tar -zxf ../zips/rofi.tgz
-    make
-    cd ..
 fi
 ln -s ~/Utility/repos/rofi/build/rofi ~/Utility/bin/rofi
 
@@ -100,7 +97,6 @@ if [[ "$response" == [gG] ]]; then
 
     git clone https://github.com/hanschen/ksuperkey.git
     ( cd ksuperkey; make )
-
 else
     tar -zxf ../zips/ksuperkey.tgz
 fi
