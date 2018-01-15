@@ -71,7 +71,8 @@ ln -s ~/Utility/repos/rofi/rofi ~/Utility/bin/rofi
 echo "==> compton (from Git / Zip):"
 read -rsn1 response
 if [[ "$response" == [gG] ]]; then
-    install gcc libconfig pcre-devel libdrm mesa-libGL-devel asciidoc desktop-file-utils xorg-x11-utils hicolor-icon-theme
+    install gcc libconfig-devel pcre-devel libdrm mesa-libGL-devel asciidoc desktop-file-utils 
+    install xorg-x11-utils hicolor-icon-theme
 
     git clone https://github.com/chjj/compton.git
     ( cd compton; make )
@@ -83,11 +84,9 @@ ln -s ~/Utility/repos/compton/compton ~/Utility/bin/compton
 echo "==> gtk3-nocsd (from Git / Zip):"
 read -rsn1 response
 if [[ "$response" == [gG] ]]; then
+    install pkgconfig gtk3-devel gtk+-devel gobject-introspection-devel
+    
     git clone https://github.com/PCMan/gtk3-nocsd.git
-    install pkgconfig
-    install gtk3-devel
-    install gtk+-devel
-    install gobject-introspection-devel
     ( cd gtk3-nocsd; make )
 else
     tar -zxf ../zips/gtk3-nocsd.tgz
@@ -97,6 +96,8 @@ ln -s ~/Utility/repos/gtk3-nocsd/gtk3-nocsd ~/Utility/bin/gtk3-nocsd
 echo "==> ksuperkey (from Git / Zip):"
 read -rsn1 response
 if [[ "$response" == [gG] ]]; then
+    install libXtst-devel
+
     git clone https://github.com/hanschen/ksuperkey.git
     ( cd ksuperkey; make )
 
