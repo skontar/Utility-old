@@ -29,6 +29,7 @@ install i3lock
 install feh
 
 # Fonts
+install hack-fonts
 install google-droid-serif-fonts
 install google-droid-sans-fonts 
 install google-droid-sans-mono-fonts
@@ -50,6 +51,7 @@ install setools
 install python3-dnf-plugins-extras-leaves
 install qt-config
 install qt5ct
+install qt5-qtstyleplugins
 install pavucontrol
 install wmctrl
 install xdotool

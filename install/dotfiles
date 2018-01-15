@@ -15,8 +15,9 @@ FILES=(
     "git-prompt-colors.sh" "~/.git-prompt-colors.sh"
     
     "compton.conf" "~/.config/compton.conf"
-    "../confidential/keepassxc.ini" "~/.config/keepassxc/keepassxc.ini"
     "doublecmd.xml" "~/.config/doublecmd/doublecmd.xml"
+    "../confidential/keepassxc.ini" "~/.config/keepassxc/keepassxc.ini"
+    "../confidential/ssh/config" "~/.ssh/config"
     
     "xfce4/terminal" "~/.config/xfce4/terminal"
     "xfce4/xfconf/xfce-perchannel-xml" "~/.config/xfce4/xfconf/xfce-perchannel-xml"
