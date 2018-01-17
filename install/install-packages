@@ -29,7 +29,9 @@ install i3lock
 install feh
 install yad
 install xfce4-notifyd
+install network-manager-applet
 install gnome-keyring  # Needed for network manager
+install udiskie
 
 # Fonts
 install google-droid-serif-fonts
@@ -62,6 +64,8 @@ install NetworkManager-openvpn-gnome
 install xfce4-power-manager
 install acpid
 install autojump
+install parcellite
+install xautolock
 
 # CLI applications
 install htop
