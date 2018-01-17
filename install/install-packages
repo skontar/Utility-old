@@ -32,7 +32,6 @@ install xfce4-notifyd
 install gnome-keyring  # Needed for network manager
 
 # Fonts
-install hack-fonts
 install google-droid-serif-fonts
 install google-droid-sans-fonts 
 install google-droid-sans-mono-fonts
@@ -62,6 +61,7 @@ install NetworkManager-openvpn
 install NetworkManager-openvpn-gnome
 install xfce4-power-manager
 install acpid
+install autojump
 
 # CLI applications
 install htop
@@ -84,7 +84,6 @@ install xarchiver
 install xfburn
 install viewnior 
 install firefox
-install google-chrome-stable
 install doublecmd-gtk 
 install speedcrunch 
 install smplayer
@@ -103,4 +102,7 @@ install docker
 # Tweaks
 sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
-    sudo sed -i 's|#greeter-setup-script=|greeter-setup-script=/usr/bin/numlockx on|g' /etc/lightdm/lightdm.conf
+sudo sed -i 's|#greeter-setup-script=|greeter-setup-script=/usr/bin/numlockx on|g' /etc/lightdm/lightdm.conf
+
+# Install chrome - last as it may fail because of the repository
+install google-chrome-stable

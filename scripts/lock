@@ -4,9 +4,9 @@
 setxkbmap -model pc104 -layout us -option grp:caps_toggle
 pkill -RTMIN+3 i3blocks
 
-# pkill compton  # Needed so notifications are not over lock screen
-# i3lock -n -i /home/skontar/Documents/Wallpapers/Dual/Converted/blue_planets_both.png  -c 000000 -f
-# compton &
+pkill compton  # Needed so notifications are not over lock screen
+i3lock -n -i ~/Utility/confidential/wallpapers/converted/blue_planets_both.png -c 000000 -f
+compton &
 
-# New version of i3lock fixes this
-i3lock -i ~/Utility/confidential/wallpapers/converted/blue_planets_both.png -c 000000 -f
+# Only version 2.8 of i3lock fixes this, but they reverted it
+# i3lock -i ~/Utility/confidential/wallpapers/converted/blue_planets_both.png -c 000000 -f

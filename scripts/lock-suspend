@@ -1,5 +1,13 @@
 #!/bin/bash
 
-lock
+delayed_suspend() {
+    sleep 1
+    systemctl suspend
+}
+
 wmctrl -c "KeePassXC"
-systemctl suspend
+delayed_suspend &
+lock
+
+
+
