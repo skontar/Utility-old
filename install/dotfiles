@@ -51,6 +51,9 @@ SUDO_FILES=(
     "acpid/jack.sh" "/etc/acpi/actions/jack.sh"
     "acpid/lidconf" "/etc/acpi/events/lidconf"
     "acpid/lid.sh" "/etc/acpi/actions/lid.sh"
+    
+    "drivers/10-intel.conf" "/etc/X11/xorg.conf.d/10-intel.conf"
+    "drivers/30-touchpad.conf" "/etc/X11/xorg.conf.d/30-touchpad.conf"
 )
 
 
@@ -81,7 +84,7 @@ handle_file() {
         if [[ -e "$target_expanded" && ! -e "$target_expanded.bak" ]]; then
             mv "$target_expanded" "$target_expanded.bak"
         fi
-        ln -s "$file_expanded" "$target_expanded"
+        ln -sf "$file_expanded" "$target_expanded"
     fi
     
     if [[ "$sudo_flag" ]]; then
