@@ -9,11 +9,13 @@ cd ~/Utility/repos
 
 echo "==> i3-gaps (from Git / Zip / Not at all):"
 read -rsn1 response
-install dh-autoreconf
-install libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel
-install xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel 
-install libev-devel xcb-util-cursor-devel libXinerama-devel libxkbcommon-devel
-install libxkbcommon-x11-devel pcre-devel pango-devel git gcc
+if [[ "$response" != [nN] ]]; then
+    install dh-autoreconf
+    install libxcb-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel
+    install xcb-util-xrm-devel yajl-devel libXrandr-devel startup-notification-devel 
+    install libev-devel xcb-util-cursor-devel libXinerama-devel libxkbcommon-devel
+    install libxkbcommon-x11-devel pcre-devel pango-devel git gcc
+fi
 if [[ "$response" == [gG] ]]; then
     git clone https://www.github.com/Airblader/i3 i3-gaps
     cd i3-gaps
@@ -48,7 +50,9 @@ fi
 
 echo "==> rofi (from Git / Zip / Not at all):"
 read -rsn1 response
-install bison flex librsvg2-devel check-devel
+if [[ "$response" != [nN] ]]; then
+    install bison flex librsvg2-devel check-devel
+fi
 if [[ "$response" == [gG] ]]; then
     git clone https://github.com/DaveDavenport/rofi.git
     cd rofi
@@ -62,42 +66,56 @@ if [[ "$response" == [gG] ]]; then
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/rofi.tgz
 fi
-ln -sf ~/Utility/repos/rofi/build/rofi ~/Utility/bin/rofi
+if [[ "$response" != [nN] ]]; then
+    ln -sf ~/Utility/repos/rofi/build/rofi ~/Utility/bin/rofi
+fi
 
 echo "==> compton (from Git / Zip / Not at all):"
 read -rsn1 response
-install gcc libconfig-devel pcre-devel libdrm mesa-libGL-devel asciidoc desktop-file-utils 
-install xorg-x11-utils hicolor-icon-theme libXcomposite-devel
+if [[ "$response" != [nN] ]]; then
+    install gcc libconfig-devel pcre-devel libdrm mesa-libGL-devel asciidoc 
+    install xorg-x11-utils hicolor-icon-theme libXcomposite-devel dbus-devel
+    install desktop-file-utils 
+fi
 if [[ "$response" == [gG] ]]; then
-
     git clone https://github.com/chjj/compton.git
     ( cd compton; make )
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/compton.tgz
 fi
-ln -sf ~/Utility/repos/compton/compton ~/Utility/bin/compton
+if [[ "$response" != [nN] ]]; then
+    ln -sf ~/Utility/repos/compton/compton ~/Utility/bin/compton
+fi
 
 echo "==> gtk3-nocsd (from Git / Zip / Not at all):"
 read -rsn1 response
-install pkgconfig gtk3-devel gtk+-devel gobject-introspection-devel
+if [[ "$response" != [nN] ]]; then
+    install pkgconfig gtk3-devel gtk+-devel gobject-introspection-devel
+fi
 if [[ "$response" == [gG] ]]; then
     git clone https://github.com/PCMan/gtk3-nocsd.git
     ( cd gtk3-nocsd; make )
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/gtk3-nocsd.tgz
 fi
-ln -sf ~/Utility/repos/gtk3-nocsd/gtk3-nocsd ~/Utility/bin/gtk3-nocsd
+if [[ "$response" != [nN] ]]; then
+    ln -sf ~/Utility/repos/gtk3-nocsd/gtk3-nocsd ~/Utility/bin/gtk3-nocsd
+fi
 
 echo "==> ksuperkey (from Git / Zip / Not at all):"
 read -rsn1 response
-install libXtst-devel
+if [[ "$response" != [nN] ]]; then
+    install libXtst-devel
+fi
 if [[ "$response" == [gG] ]]; then
     git clone https://github.com/hanschen/ksuperkey.git
     ( cd ksuperkey; make )
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/ksuperkey.tgz
 fi
-ln -sf ~/Utility/repos/ksuperkey/ksuperkey ~/Utility/bin/ksuperkey
+if [[ "$response" != [nN] ]]; then
+    ln -sf ~/Utility/repos/ksuperkey/ksuperkey ~/Utility/bin/ksuperkey
+fi
 
 echo "==> presentation-switch (from Git / Zip / Not at all):"
 read -rsn1 response
@@ -106,7 +124,9 @@ if [[ "$response" == [gG] ]]; then
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/presentation-switch.tgz
 fi
-ln -sf ~/Utility/repos/presentation-switch/presentation_switch.py ~/Utility/bin/presentation-switch
+if [[ "$response" != [nN] ]]; then
+    ln -sf ~/Utility/repos/presentation-switch/presentation_switch.py ~/Utility/bin/presentation-switch
+fi
 
 echo "==> update-checker (from Git / Zip / Not at all):"
 read -rsn1 response
@@ -115,7 +135,9 @@ if [[ "$response" == [gG] ]]; then
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/update-checker.tgz
 fi
-ln -sf ~/Utility/repos/update-checker/update_checker.py ~/Utility/bin/update-checker
+if [[ "$response" != [nN] ]]; then
+    ln -sf ~/Utility/repos/update-checker/update_checker.py ~/Utility/bin/update-checker
+fi
 
 echo "==> bash-git-prompt (from Git / Zip / Not at all):"
 read -rsn1 response
