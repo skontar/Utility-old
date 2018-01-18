@@ -62,7 +62,7 @@ if [[ "$response" == [gG] ]]; then
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/rofi.tgz
 fi
-ln -s ~/Utility/repos/rofi/build/rofi ~/Utility/bin/rofi
+ln -sf ~/Utility/repos/rofi/build/rofi ~/Utility/bin/rofi
 
 echo "==> compton (from Git / Zip / Not at all):"
 read -rsn1 response
@@ -75,7 +75,7 @@ if [[ "$response" == [gG] ]]; then
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/compton.tgz
 fi
-ln -s ~/Utility/repos/compton/compton ~/Utility/bin/compton
+ln -sf ~/Utility/repos/compton/compton ~/Utility/bin/compton
 
 echo "==> gtk3-nocsd (from Git / Zip / Not at all):"
 read -rsn1 response
@@ -86,7 +86,7 @@ if [[ "$response" == [gG] ]]; then
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/gtk3-nocsd.tgz
 fi
-ln -s ~/Utility/repos/gtk3-nocsd/gtk3-nocsd ~/Utility/bin/gtk3-nocsd
+ln -sf ~/Utility/repos/gtk3-nocsd/gtk3-nocsd ~/Utility/bin/gtk3-nocsd
 
 echo "==> ksuperkey (from Git / Zip / Not at all):"
 read -rsn1 response
@@ -97,7 +97,7 @@ if [[ "$response" == [gG] ]]; then
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/ksuperkey.tgz
 fi
-ln -s ~/Utility/repos/ksuperkey/ksuperkey ~/Utility/bin/ksuperkey
+ln -sf ~/Utility/repos/ksuperkey/ksuperkey ~/Utility/bin/ksuperkey
 
 echo "==> presentation-switch (from Git / Zip / Not at all):"
 read -rsn1 response
@@ -106,7 +106,7 @@ if [[ "$response" == [gG] ]]; then
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/presentation-switch.tgz
 fi
-ln -s ~/Utility/repos/presentation-switch/presentation_switch.py ~/Utility/bin/presentation-switch
+ln -sf ~/Utility/repos/presentation-switch/presentation_switch.py ~/Utility/bin/presentation-switch
 
 echo "==> update-checker (from Git / Zip / Not at all):"
 read -rsn1 response
@@ -115,7 +115,7 @@ if [[ "$response" == [gG] ]]; then
 elif [[ "$response" == [zZ] ]]; then
     tar -zxf ../zips/update-checker.tgz
 fi
-ln -s ~/Utility/repos/update-checker/update_checker.py ~/Utility/bin/update-checker
+ln -sf ~/Utility/repos/update-checker/update_checker.py ~/Utility/bin/update-checker
 
 echo "==> bash-git-prompt (from Git / Zip / Not at all):"
 read -rsn1 response
