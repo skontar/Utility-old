@@ -10,7 +10,7 @@ ask() {
 install () {
     for package in "$@"; do
         echo "===> Installing $package"
-        sudo dnf install ${package} #-y
+        sudo dnf install ${package} -y
     done
 }
 
