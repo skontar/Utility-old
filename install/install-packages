@@ -109,6 +109,8 @@ install hexchat
 install docker
 install ansible
 install vagrant
+install dconf-editor
+install qt5-qdbusviewer
 
 # Tweaks
 sudo systemctl enable lightdm
