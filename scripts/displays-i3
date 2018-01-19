@@ -7,12 +7,12 @@ all_off() {
     xrandr --output eDP1 --off
     xrandr --output DP2-2 --off
     xrandr --output DP2-1 --off
-    xrandr --output HDMI1 --off
+    xrandr --output HDMI2 --off
     xrandr --output DP2 --off
 }
 
 single_screen() {
-    xrandr --output HDMI1 --primary --auto
+    xrandr --output HDMI2 --primary --auto
        
     xrandr --dpi 96x96
     notify-send "Single screen" -t 3000

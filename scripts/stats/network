@@ -1,7 +1,7 @@
 #!/bin/bash
 
-wired_name="enp0s25"
-wifi_name="wlp3s0"
+wired_name="enp0s31f6"
+wifi_name="wlp58s0"
 wifi_weak_color="#ffff00"
 wifi_dead_color="#ff0000"
 kerberos_expired_color="#ff0000"
@@ -26,14 +26,6 @@ if [[ "$wifi_state" == "up" ]]; then
     strength_values=( $( sed -r -n 's|^.*Link Quality=([[:digit:]]+)/([[:digit:]]+).*$|\1 \2|p' <<< "$wifi_iwdata" ) )
     strength=$(( 100 * strength_values[0] / strength_values[1] ))
     
-    # if (( strength > 50 )); then
-        # wifi_symbol=""
-    # elif (( strength > 20 )); then
-        # wifi_symbol="<span color=\"$wifi_weak_color\"></span>"
-    # else
-        # wifi_symbol="<span color=\"$wifi_dead_color\"></span>"
-    # fi
-
     if (( strength > 60 )); then
         wifi_symbol=""
     elif (( strength > 30 )); then
@@ -42,7 +34,7 @@ if [[ "$wifi_state" == "up" ]]; then
         wifi_symbol="<span color=\"$wifi_dead_color\"></span>"
     fi
     
-    wifi_ifdata=$( grep wlp3s0 -A 3 <<< "$ifconfig_filtered" )
+    wifi_ifdata=$( grep "$wifi_name" -A 3 <<< "$ifconfig_filtered" )
     wifi_ip=$( sed -r -n 's/^.*inet ([[:digit:]\.]+).*$/\1/p' <<< "$wifi_ifdata" )
     wifi_rx=$( sed -r -n 's/^[[:space:]]+RX.*\((.*)\)/\1/p' <<< "$wifi_ifdata" )
     wifi_tx=$( sed -r -n 's/^[[:space:]]+TX.*\((.*)\)/\1/p' <<< "$wifi_ifdata" )

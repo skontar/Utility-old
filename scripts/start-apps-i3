@@ -2,7 +2,7 @@
 
 pgrep thunderbird || thunderbird &
 pgrep doublecmd || doublecmd &
-pgrep pycharm || pycharm &
+pgrep pycharm || /home/skontar/Programs/pycharm-community-2017.3.3/bin/pycharm.sh &
 pgrep firefox || firefox &
 pgrep hexchat || hexchat &
 # pgrep mcheck || ~/Python/Mcheck/mcheck.py &

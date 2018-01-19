@@ -107,6 +107,8 @@ install keepassxc
 install dropbox
 install hexchat
 install docker
+install ansible
+install vagrant
 
 # Tweaks
 sudo systemctl enable lightdm
