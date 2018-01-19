@@ -66,6 +66,8 @@ install acpid
 install autojump
 install parcellite
 install xautolock
+install tlp
+install powertop
 
 # CLI applications
 install htop
