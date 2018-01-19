@@ -85,6 +85,7 @@ focus_on_window_activation focus
 
 for_window [class=".*"] title_format " <b>%title</b>"
 for_window [class=".*"] border pixel 3
+for_window [class="Ulauncher"] border pixel 0
 for_window [class="Pavucontrol"] floating enable, move position mouse, move up 32 px
 for_window [class="Xfce4-power-manager-settings"] floating enable, move position mouse, move up 32 px
 for_window [class="Yad"] floating enable
@@ -136,8 +137,9 @@ bindsym --release $mod+Escape  exec xkill
 # Keybindings - applications
 bindsym $mod+Return            exec xfce4-terminal
 bindsym F12                    exec xfce4-terminal --drop-down
-bindsym $mod+Alt_L             exec "rofi -show window -modi window,drun,run -sidebar-mode"
-bindsym Mod1+F3                exec "rofi -show drun -modi window,drun,run -sidebar-mode"
+# bindsym $mod+Alt_L             exec "rofi -show window -modi window,drun,run -sidebar-mode"
+# bindsym Mod1+F3                exec "rofi -show drun -modi window,drun,run -sidebar-mode"
+bindsym Mod1+F3				   exec ulauncher
 bindsym $mod+d                 exec doublecmd                               
 bindsym $mod+i                 exec firefox                               
 bindsym $mod+t                 exec thunderbird                               
@@ -214,7 +216,7 @@ bar {
     output eDP-1
     output HDMI1
     output DP2-2
-    font pango: Hack, FontAwesome 11
+    font pango: Hack, FontAwesome 11.5
     height 32
     tray_output primary
     tray_padding 4
@@ -228,7 +230,7 @@ bar {
 
 bar {
     output DP2-1
-    font pango: Hack, FontAwesome 11
+    font pango: Hack, FontAwesome 12
     height 32
     tray_output none
     binding_mode_indicator no

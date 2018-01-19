@@ -2,7 +2,8 @@
 
 . "${BASH_SOURCE%/*}/../confidential/remote-mount-config.sh"
 
-mount_root="$HOME/Remote"
+#~ mount_root="$HOME/Remote"
+mount_root="/mount"
 
 umount_command="fusermount -u"
 

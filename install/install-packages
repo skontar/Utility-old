@@ -30,7 +30,8 @@ install feh
 install yad
 install xfce4-notifyd
 install network-manager-applet
-install gnome-keyring  # Needed for network manager
+install gnome-keyring       # Needed for network manager
+install gnome-keyring-pam   # Needed for Kerberos
 install udiskie
 
 # Fonts
@@ -68,6 +69,8 @@ install parcellite
 install xautolock
 install tlp
 install powertop
+install fuse-sshfs
+install krb5-workstation
 
 # CLI applications
 install htop
@@ -109,6 +112,7 @@ install docker
 sudo systemctl enable lightdm
 sudo systemctl set-default graphical.target
 sudo sed -i 's|#greeter-setup-script=|greeter-setup-script=/usr/bin/numlockx on|g' /etc/lightdm/lightdm.conf
+sudo timedatectl set-timezone Europe/Prague
 
 # Install chrome - last as it may fail because of the repository
 install google-chrome-stable

@@ -11,3 +11,4 @@ for (( i = 0; i < nr_of_elements; i += 2 )); do
 done
 
 
+chmod 640 ../confidential/ssh/config

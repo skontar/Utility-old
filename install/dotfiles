@@ -43,7 +43,7 @@ FILES=(
 )
 
 SUDO_FILES=(
-    "sudoers" "/etc/sudoers"
+    "../confidential/krb5.conf" "/etc/krb5.conf"
     
     "acpid/dockconf" "/etc/acpi/events/dockconf"
     "acpid/dock.sh" "/etc/acpi/actions/dock.sh"
@@ -54,6 +54,8 @@ SUDO_FILES=(
     
     "drivers/10-intel.conf" "/etc/X11/xorg.conf.d/10-intel.conf"
     "drivers/30-touchpad.conf" "/etc/X11/xorg.conf.d/30-touchpad.conf"
+
+    "sudoers" "/etc/sudoers"
 )
 
 
