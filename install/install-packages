@@ -14,6 +14,11 @@ install @base-x
 remove abrt*
 sudo dracut --force  # Enable Plymouth
 
+# Remove garbage
+remove PackageKit-glib
+remove sssd
+remove sssd-client
+
 # Office
 install @libreoffice
 

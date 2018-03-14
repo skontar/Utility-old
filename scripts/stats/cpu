@@ -13,7 +13,7 @@ temp=$(( temp_string / 1000 ))
 
 if (( temp > 85 )); then
     thermo="<span color=\"$critical_color\"> $temp°C</span>"
-elif (( temp > 80 )); then
+elif (( temp > 75 )); then
     thermo="<span color=\"$warm_color\"> $temp°C</span>"
 elif (( temp > 70 )); then
     thermo=" $temp°C"

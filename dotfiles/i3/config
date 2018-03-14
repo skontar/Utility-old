@@ -133,13 +133,15 @@ bindsym $mod+e                 layout toggle split
 bindsym $mod+f                 fullscreen toggle
 bindsym $mod+u                 [urgent=latest] focus
 bindsym --release $mod+Escape  exec xkill
+bindsym $mod+Tab               exec --no-startup-id "pkill compton; sleep 0.5; compton &"
+
 
 # Keybindings - applications
 bindsym $mod+Return            exec xfce4-terminal
 bindsym F12                    exec xfce4-terminal --drop-down
-# bindsym $mod+Alt_L             exec "rofi -show window -modi window,drun,run -sidebar-mode"
-# bindsym Mod1+F3                exec "rofi -show drun -modi window,drun,run -sidebar-mode"
-bindsym Mod1+F3				   exec --no-startup-id ulauncher
+bindsym $mod+Alt_L             exec "rofi -show window -modi window,drun,run -sidebar-mode"
+bindsym Mod1+F3                exec "rofi -show drun -modi window,drun,run -sidebar-mode"
+# bindsym Mod1+F3				   exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -fn 'Hack-20' -l 10"
 bindsym $mod+d                 exec doublecmd                               
 bindsym $mod+i                 exec firefox                               
 bindsym $mod+t                 exec thunderbird                               
@@ -152,12 +154,12 @@ bindsym Print                  exec xfce4-screenshooter
 bindsym $mod+k                 exec xfce4-terminal --role floating -x kerberos
 bindsym $mod+o                 exec --no-startup-id toggle-dropbox
 bindsym $mod+p                 exec --no-startup-id presentation-switch
-bindsym $mod+comma             exec --no-startup-id displays-i3 
-bindsym $mod+period            exec --no-startup-id "displays-i3 1; pkill -RTMIN+1 i3blocks"
-bindsym $mod+slash             exec --no-startup-id "displays-i3 2; pkill -RTMIN+1 i3blocks"
-bindsym $mod+m                 exec --no-startup-id "displays-i3 3; pkill -RTMIN+1 i3blocks"
+bindsym $mod+comma             exec --no-startup-id displays 
+bindsym $mod+period            exec --no-startup-id "displays single; pkill -RTMIN+1 i3blocks"
+bindsym $mod+slash             exec --no-startup-id "displays dual; pkill -RTMIN+1 i3blocks"
+bindsym $mod+m                 exec --no-startup-id "displays mirror; pkill -RTMIN+1 i3blocks"
 bindsym $mod+n                 exec --no-startup-id vpn-connect
-bindsym $mod+s                 exec --no-startup-id start-apps-i3
+bindsym $mod+s                 exec --no-startup-id start-apps
 bindsym $mod+less              exec people-search
 bindsym $mod+grave             exec xfce4-terminal --role floating -x remote-mount --nohup
 bindsym $mod+l                 exec --no-startup-id lock
@@ -215,8 +217,11 @@ bar {
     output eDP1
     output eDP-1
     output HDMI1
+    output HDMI-1
     output HDMI2
+    output HDMI-2
     output DP2-2
+    output DP-2-2
     font pango: Hack, FontAwesome 11.5
     height 32
     tray_output primary
@@ -230,8 +235,9 @@ bar {
 }
 
 bar {
-    output DP2-1
-    font pango: Hack, FontAwesome 12
+	output DP2-1
+    output DP-2-1
+    font pango: Hack, FontAwesome 11.5
     height 32
     tray_output none
     binding_mode_indicator no
@@ -259,6 +265,6 @@ exec --no-startup-id parcellite -d -n
 exec --no-startup-id udiskie -2 -s &
 exec --no-startup-id xautolock -locker lock &
 exec_always --no-startup-id feh --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_left.jpg --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_right.jpg 
-exec_always --no-startup-id "pkill compton; sleep 0.5; compton -b"
+exec_always --no-startup-id "pkill compton; sleep 0.5; compton &"
 exec --no-startup-id "sleep 5; pkill -RTMIN+2 i3blocks"
 exec --no-startup-id presence &

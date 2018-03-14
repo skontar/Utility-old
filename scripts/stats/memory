@@ -27,7 +27,7 @@ if [[ $BLOCK_BUTTON == "1" ]]; then
             headers++
           }' <<< "$top" )
         
-        mem=$( ps axo comm,rss --sort=-%mem --no-headers | head -n 5 )
+        mem=$( ps axo comm,rss --sort=-%mem --no-headers | head -n 10 )
         filtered_mem=$( awk '
           BEGIN { printf "%-17s %5s", "COMMAND", "RSS" }
           
@@ -54,7 +54,7 @@ if [[ $BLOCK_BUTTON == "1" ]]; then
             } 
           }' <<< "$mem" )
         
-        printf "%s\n\n%s" "$filtered_cpu" "$filtered_mem" | yad --text-info --width 220 --height 240 --no-buttons --title "Top popup" &
+        printf "%s\n\n%s" "$filtered_cpu" "$filtered_mem" | yad --text-info --width 220 --height 335 --no-buttons --title "Top popup" &
     fi
 fi
 

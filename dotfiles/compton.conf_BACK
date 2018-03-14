@@ -1,0 +1,54 @@
+backend = "xr_glx_hybrid";
+vsync = "opengl-swc";
+sw-opti = false;
+
+#~ backend = "glx";              # OpenGL backend.
+# glx-no-stencil = true;        # Performance boost. Recommended.
+# glx-no-rebind-pixmap = true;  # Performance boost. Recommended if it works.
+# glx-swap-method = 3;          # Triple buffering, improve performance, quality and input lag.
+#~ vsync = "opengl-swc";         # Only work on some drivers. Known to be most effective on many drivers.
+xrender-sync-fence = true;    # Fix bad synchronization between X Render and GLX may lead to lag
+# unredir-if-possible = true;   # Maximize performance for full-screen windows. When true may cause tearing. When false it may cause notifications over lockscreen.
+paint-on-overlay = true;      # Painting on X Composite overlay window instead of on root window.
+
+# Shadow
+shadow = true;                # Enabled client-side shadows on windows.
+no-dock-shadow = true;        # Avoid drawing shadows on dock/panel windows.
+no-dnd-shadow = true;         # Don't draw shadows on DND windows.
+clear-shadow = true;          # Zero the part of the shadow's mask behind the window (experimental).
+shadow-radius = 6;            # The blur radius for shadows. (default 12)
+shadow-offset-x = -9;         # The left offset for shadows. (default -15)
+shadow-offset-y = -9;         # The top offset for shadows. (default -15)
+shadow-opacity = 0.5;
+shadow-exclude = [
+    "class_g ?= 'VirtualBox'",
+    "class_g ?= 'Xfce4-notifyd'",         # XFCE notification
+    "class_g ?= 'Conky'",                 # Conky
+    "class_g ?= 'xfwm4'",                 # Alt-tab
+    "class_g ?= 'synapse'",               # Synapse
+    "class_g ?= 'Ulauncher'",               # Synapse
+    "class_g ?= 'Firefox' && argb",       # Firefox bookmarks etc.
+    "_GTK_FRAME_EXTENTS@:c"               # GTK+3 windows
+];
+
+
+
+# Opacity
+detect-client-opacity = true;
+
+# Blur
+# blur-kern="11x11gaussian"
+# blur-kern="5x5box";
+# blur-background = true;
+# blur-background-fixed = true;
+
+# Window type settings
+wintypes:
+{
+    tooltip = { shadow = false; };
+#    menu        = { shadow = false; };
+#    dropdown_menu = { shadow = false; };
+#    popup_menu    = { shadow = false; };
+    utility     = { shadow = false; };
+};
+

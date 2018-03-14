@@ -4,8 +4,7 @@
 
 PS1='\[\e[1;37m\]\w\[\e[m\] $( RET="$?"; if [[ "$RET" != 0 ]]; then echo "\[\033[38;5;196m\]✘ $RET "; fi )\[\e[1;32m\]\$\[\e[m\]\[\e[0m\] '
 
-# PS1='\[\e[1;37m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\]\[\e[0m\] '
-# PS1='\[\e[1;37m\]\w\[\e[m\] \[\e[1;31m\]\$\[\e[m\]\[\e[0m\] '
+# PS1='\[\e[1;37m\]\w\[\e[m\] \[\e[1;31m\]#\[\e[m\]\[\e[0m\] '
 
 # Aliases
 alias u='micro'
@@ -54,8 +53,8 @@ alias gp='git pull'
 alias gpr='git pull --rebase'
 
 # Git autocomplete
-if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
+if [ -f /usr/share/doc/git/contrib/completion/git-completion.bash ]; then
+  . /usr/share/doc/git/contrib/completion/git-completion.bash
   __git_complete gco _git_checkout
 fi
 

@@ -6,44 +6,21 @@
 # action=/etc/acpi/actions/dock.sh "%e"
 
 # /etc/acpi/actions/dock.sh
-# 
+#
 # #!/bin/bash
-# 
+#
 # su -lc "DISPLAY=:0.0 action-dock \"$1\"" skontar
 
-# ibm/hotkey LEN0068:00 00000080 00004011
 # ibm/hotkey LEN0068:00 00000080 00006030
-
-# ibm/hotkey LEN0068:00 00000080 00004010
-# ibm/hotkey LEN0068:00 00000080 00006030
-
 
 # Debugging
-echo "$( date +"%-k:%M:%S" ) Dock! *$1*" >> ~/dock.log
+echo ">>> $( date +"%-k:%M:%S" ) Dock! *$1*"
 
 state=$( cut -d " " -f 4 <<< "$1" )
 
-if [[ "$state" == "00004010" || "$state" == "00004011" ]]; then
-    # Dock
-    if [[ "$state" == "00004010" ]]; then
-        echo "Running 'sleep 4'"
-        sleep 4
-        echo "Running 'displays-i3 2'"
-        displays-i3 2
-        echo "Running 'i3blocks'"
-        pkill -RTMIN+1 i3blocks
-        sleep 2
-        pkill -RTMIN+2 i3blocks
-    fi
-    # Undock
-    if [[ "$state" == "00004011" ]]; then
-        echo "Running 'sleep 2'"
-        sleep 2
-        echo "Running 'displays-i3'"
-        displays-i3
-        echo "Running 'i3blocks'"
-        pkill -RTMIN+1 i3blocks
-        sleep 2
-        pkill -RTMIN+2 i3blocks
-    fi
+if [[ "$state" == "00006030" ]]; then
+    # Dock changed
+    echo "> Dock changed"
+    displays auto
+    pkill -RTMIN+1 i3blocks
 fi
