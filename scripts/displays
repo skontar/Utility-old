@@ -6,8 +6,9 @@
 D_LAPTOP="eDP1"
 D_SINGLE="HDMI2"
 D_BACKUP="DP2" # Backup projector port, t470s has none...
-D_DUAL_1="DP2-2"
-D_DUAL_2="DP2-1"
+D_DUAL_1="DP2-1"
+D_DUAL_2="DP2-2"
+
 
 all_off() {
     xrandr --output "$D_LAPTOP" --off
@@ -26,8 +27,8 @@ single_screen() {
 }
 
 dual_screen() {
-    xrandr --output "$D_DUAL_1" --primary --auto
-    xrandr --output "$D_DUAL_2" --auto --right-of "$D_DUAL_1"
+    xrandr --output "$D_DUAL_2" --primary --auto
+    #~ xrandr --output "$D_DUAL_2" --auto --right-of "$D_DUAL_1"
 
     xrandr --dpi 96x96
     echo "Dual screen"
@@ -70,7 +71,7 @@ check_available() {
 }
 
 kill_apps() {
-    pkill compton
+    compositor-stop
 }
 
 restart_apps() {
@@ -92,7 +93,7 @@ case "$1" in
     "auto")
         xrandr_output=$( xrandr )
         all_off
-        if grep -q -E "$D_DUAL_1 connected" <<< "$xrandr_output"; then
+        if grep -q -E "$D_DUAL_2 connected" <<< "$xrandr_output"; then
             dual_screen
         elif grep -q -E "$D_SINGLE connected" <<< "$xrandr_output"; then
             single_screen

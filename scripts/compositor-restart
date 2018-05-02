@@ -1,0 +1,5 @@
+#!/bin/bash
+
+compositor-stop
+sleep 0.5
+compositor-start

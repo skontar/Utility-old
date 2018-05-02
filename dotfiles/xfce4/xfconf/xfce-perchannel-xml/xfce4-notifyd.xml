@@ -18,6 +18,7 @@
       <value type="string" value="org.kdenlive.kdenlive"/>
       <value type="string" value="presentation_switch"/>
       <value type="string" value="reproducer"/>
+      <value type="string" value="ScudCloud"/>
       <value type="string" value="Sealert notification"/>
       <value type="string" value="test"/>
       <value type="string" value="Thunar"/>

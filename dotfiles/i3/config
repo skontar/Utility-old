@@ -76,7 +76,7 @@ bindcode $mod+Shift+18 move container to workspace $ws9, workspace $ws9
 bindcode $mod+Shift+19 move container to workspace $ws10, workspace $ws10
 
 
-workspace $ws4 output DP2-1
+# workspace $ws4 output DP2-1
 
 
 # Windows
@@ -86,6 +86,7 @@ focus_on_window_activation focus
 for_window [class=".*"] title_format " <b>%title</b>"
 for_window [class=".*"] border pixel 3
 for_window [class="Ulauncher"] border pixel 0
+for_window [instance="sun-awt-X11-XWindowPeer"] border pixel 0
 for_window [class="Pavucontrol"] floating enable, move position mouse, move up 32 px
 for_window [class="Xfce4-power-manager-settings"] floating enable, move position mouse, move up 32 px
 for_window [class="Yad"] floating enable
@@ -128,12 +129,12 @@ bindsym $mod+Shift+minus       move scratchpad
 # bindsym $mod+Shift+plus        scratchpad show
 bindsym $mod+h                 split h
 bindsym $mod+v                 split v
-bindsym $mod+w                 layout toggle
+bindsym $mod+w                 layout toggle tabbed split
 bindsym $mod+e                 layout toggle split
 bindsym $mod+f                 fullscreen toggle
 bindsym $mod+u                 [urgent=latest] focus
 bindsym --release $mod+Escape  exec xkill
-bindsym $mod+Tab               exec --no-startup-id "pkill compton; sleep 0.5; compton &"
+bindsym $mod+Tab               exec --no-startup-id compositor-restart
 
 
 # Keybindings - applications
@@ -259,12 +260,13 @@ exec --no-startup-id nm-applet &
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/presentation-mode -s false
 exec --no-startup-id ksuperkey -e 'Super_L=Alt_L|F3;Super_R=Alt_R|F3' 
-exec --no-startup-id update-checker &
+# exec --no-startup-id update-checker &
 exec --no-startup-id sudo acpid
 exec --no-startup-id parcellite -d -n
 exec --no-startup-id udiskie -2 -s &
 exec --no-startup-id xautolock -locker lock &
-exec_always --no-startup-id feh --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_left.jpg --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_right.jpg 
-exec_always --no-startup-id "pkill compton; sleep 0.5; compton &"
+exec_always --no-startup-id feh --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_right.jpg 
+# --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_left.jpg 
+exec_always --no-startup-id compositor-restart
 exec --no-startup-id "sleep 5; pkill -RTMIN+2 i3blocks"
 exec --no-startup-id presence &
