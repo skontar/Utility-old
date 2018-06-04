@@ -86,7 +86,6 @@ focus_on_window_activation focus
 for_window [class=".*"] title_format " <b>%title</b>"
 for_window [class=".*"] border pixel 3
 for_window [class="Ulauncher"] border pixel 0
-for_window [instance="sun-awt-X11-XWindowPeer"] border pixel 0
 for_window [class="Pavucontrol"] floating enable, move position mouse, move up 32 px
 for_window [class="Xfce4-power-manager-settings"] floating enable, move position mouse, move up 32 px
 for_window [class="Yad"] floating enable
@@ -97,6 +96,10 @@ for_window [class="Doublecmd"] floating enable
 for_window [class="Doublecmd" title="^Double Commander 0.*$"] floating disable
 for_window [class="keepassxc" title="Auto"] resize set 600 400, move position center
 for_window [class="VirtualBox" title="- Oracle VM VirtualBox"] floating enable
+
+# Fix PyCharm quirks
+for_window [instance="sun-awt-X11-XWindowPeer"] border pixel 0
+for_window [class="^jetbrains-.+"][window_type=dialog] focus
 
 assign [class="Thunderbird"] $ws1
 assign [class="Doublecmd"] $ws2
@@ -166,6 +169,8 @@ bindsym $mod+grave             exec xfce4-terminal --role floating -x remote-mou
 bindsym $mod+l                 exec --no-startup-id lock
 bindsym $mod+z                 exec xfce4-terminal --role floating -x ssh-unlock
 bindsym --release $mod+a       exec --no-startup-id keepass-autotype-layout
+
+bindsym $mod+b                 exec "cd ~/Dropbox/Atari/; ~/Dropbox/Atari/start"
 
 # Keybindings - system
 bindsym XF86AudioRaiseVolume   exec --no-startup-id ~/Utility/scripts/stats/volume up
@@ -260,7 +265,7 @@ exec --no-startup-id nm-applet &
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/presentation-mode -s false
 exec --no-startup-id ksuperkey -e 'Super_L=Alt_L|F3;Super_R=Alt_R|F3' 
-# exec --no-startup-id update-checker &
+exec --no-startup-id "sleep 30; update-checker &"
 exec --no-startup-id sudo acpid
 exec --no-startup-id parcellite -d -n
 exec --no-startup-id udiskie -2 -s &

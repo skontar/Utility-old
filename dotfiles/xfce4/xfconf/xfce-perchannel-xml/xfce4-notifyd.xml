@@ -38,4 +38,6 @@
   <property name="log-level-apps" type="uint" value="0"/>
   <property name="do-fadeout" type="bool" value="true"/>
   <property name="primary-monitor" type="uint" value="1"/>
+  <property name="do-slideout" type="bool" value="false"/>
+  <property name="initial-opacity" type="double" value="0.900000"/>
 </channel>

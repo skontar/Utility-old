@@ -3,10 +3,7 @@
 warm_color="#ffff00"
 critical_color="#ff0000"
 
-
-top=$( top -bn2 ) 
-values=( $( sed -r -n 's/^.*Cpu\(s\):.*[[:space:]]+([0-9.]+)[[:space:]]+id,.*$/\1/p' <<< "$top" ) )
-cpu=$( bc <<< "scale=0; (100.0 - ${values[1]}) / 1")
+cpu=$( top -bn2 | awk '/Cpu\(s\)/ { value = $8 } END { print int(100 - value) }' )
 
 temp_string=$( </sys/class/thermal/thermal_zone3/temp )
 temp=$(( temp_string / 1000 ))

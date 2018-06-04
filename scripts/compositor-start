@@ -1,4 +1,4 @@
 #!/bin/bash
 
-xcompmgr &
-# compton --logpath ~/compton.log &
+# xcompmgr &>> ~/xcompmgr.log &
+compton --logpath ~/compton.log &

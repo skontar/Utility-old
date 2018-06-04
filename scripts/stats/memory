@@ -58,6 +58,6 @@ if [[ $BLOCK_BUTTON == "1" ]]; then
     fi
 fi
 
-used_memory=$( free -h | sed -r -n 's/^Mem:[[:space:]]+[^[:space:]]+[[:space:]]+([^[:space:]]+).*$/\1/p' )
+used_memory=$( free -h | awk '/Mem:/ { print $3 }' )
 
 echo " $used_memory"

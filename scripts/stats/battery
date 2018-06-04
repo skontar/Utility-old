@@ -18,7 +18,7 @@ power_now_1=$( </sys/class/power_supply/BAT1/power_now )
 percentage=$(( 100 * (energy_now_0 + energy_now_1) / (energy_full_0 + energy_full_1) ))
 
 # Handle system statistics inaccuracies
-if (( percentage >= 98 )); then
+if (( percentage >= 97 )); then
     percentage=100
 fi
 
