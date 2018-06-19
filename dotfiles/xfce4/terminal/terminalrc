@@ -38,4 +38,6 @@ ColorCursorForeground=#ffffffffffff
 ColorCursor=#0000aaaa0000
 ColorCursorUseDefault=FALSE
 DropdownKeepOpenDefault=TRUE
+MiscShowRelaunchDialog=TRUE
+MiscNewTabAdjacent=FALSE
 
