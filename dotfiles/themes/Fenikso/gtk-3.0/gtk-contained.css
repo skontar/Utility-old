@@ -4341,7 +4341,7 @@ read if you used those and something break with a version upgrade you're on your
   .xfce4-panel.background menu {
     -gtk-icon-effect: none;
     text-shadow: none; }
-
+/*
 #XfceNotifyWindow progressbar progress {
     border: 1px solid shade(#398ee7, 0.4);
 }
@@ -4405,7 +4405,7 @@ XfceNotifyWindow progressbar progress {
     border: 1px solid shade(#828282, 0.5);
     background-image: linear-gradient(to bottom, shade(#b3b3b3, 0.65), shade(#b3b3b3, 1.25));
 }
-
+*/
 
 .lightdm-gtk-greeter {
   /*********
