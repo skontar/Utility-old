@@ -4,7 +4,7 @@ if [[ $BLOCK_BUTTON == "1" ]]; then
     if ! wmctrl -F -c "Disk popup"; then
         notify-send -t 2000 "Counting disk space..."
         disk=$( du -xahd1 /home/skontar | sort -h -r | sed 's|/home/skontar/||g' | head -n 11 | tail -n 10 )
-        printf "%s" "$disk" | yad --text-info --width 230 --height 190 --no-buttons --title "Disk popup" &
+        printf "%s" "$disk" | yad --text-info --width 230 --height 190 --no-buttons --title "Disk popup" &> /dev/null &
     fi
 fi
 

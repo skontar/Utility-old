@@ -1,7 +1,9 @@
 #!/bin/bash
 
 if [[ $BLOCK_BUTTON == "1" ]]; then
-    pkill -f xfce4-power-manager-settings || xfce4-power-manager-settings &
+    if ! pkill -f xfce4-power-manager-settings; then
+        xfce4-power-manager-settings &
+    fi
 fi
 
 battery_weak_color="#ffff00"
