@@ -1,10 +1,10 @@
 #!/bin/bash
 
 if pgrep keepassxc; then
-    notify-send -t 500 "Closing KeePassXC..."
+    notify-send -t 1000 "Closing KeePassXC..."
     wmctrl -c "KeePassXC"
 else
-    notify-send -t 500 "Starting KeePassXC..."
+    notify-send -t 1000 "Starting KeePassXC..."
     i3-msg workspace "10:  "
     keepassxc &
 fi

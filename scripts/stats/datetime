@@ -6,5 +6,5 @@ if [[ $BLOCK_BUTTON == "1" ]]; then
     fi
 fi
 
-date +"  %a %-e %b  <b>%-k:%M</b>"
-date +" <b>%-k:%M</b>"
+date -d "+20 seconds" +"  %a %-e %b  <b>%-k:%M</b>"
+date -d "+20 seconds" +" <b>%-k:%M</b>"

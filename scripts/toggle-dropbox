@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [[ "$( dropbox status )" == "Dropbox isn't running!" ]]; then
-    notify-send -t 500 "Starting Dropbox..."
+    notify-send -t 1000 "Starting Dropbox..."
     dropbox start
 else
-    notify-send -t 500 "Stopping Dropbox..."
+    notify-send -t 1000 "Stopping Dropbox..."
     dropbox stop
 fi

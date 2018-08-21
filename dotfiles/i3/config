@@ -46,9 +46,9 @@ set $ws3 "3:  "
 set $ws4 "4:  "
 set $ws5 "5:  "
 set $ws6 "6:  "
-set $ws7 "7: 7 "
-set $ws8 "8: 8 "
-set $ws9 "9: 9 "
+set $ws7 "7:  "
+set $ws8 "8:  "
+set $ws9 "9:  "
 set $ws10 "10:  "
 
 # Use keycodes to make sure it works on different layouts
@@ -149,8 +149,8 @@ bindsym Mod1+F3                exec "rofi -show drun -modi window,drun,run -side
 bindsym $mod+d                 exec doublecmd                               
 bindsym $mod+i                 exec firefox                               
 bindsym $mod+t                 exec thunderbird                               
-bindsym $mod+y                 exec pycharm                                
-bindsym $mod+c                 exec hexchat                               
+bindsym $mod+y                 exec virt-manager                                
+bindsym $mod+c                 exec /opt/google/chrome/chrome
 bindsym $mod+g                 exec geany                               
 bindsym Print                  exec xfce4-screenshooter
 
@@ -264,8 +264,9 @@ exec --no-startup-id pulseaudio -D
 exec --no-startup-id nm-applet &
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/presentation-mode -s false
+exec --no-startup-id xfconf-query -c xfce4-notifyd -p /do-not-disturb -s false
 exec --no-startup-id ksuperkey -e 'Super_L=Alt_L|F3;Super_R=Alt_R|F3' 
-exec --no-startup-id "sleep 30; update-checker &"
+# exec --no-startup-id "sleep 30; update-checker &"
 exec --no-startup-id sudo acpid
 exec --no-startup-id parcellite -d -n
 exec --no-startup-id udiskie -2 -s &

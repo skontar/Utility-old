@@ -64,4 +64,4 @@ interval=once
 signal=3
 
 [datetime]
-interval=60
+interval=20

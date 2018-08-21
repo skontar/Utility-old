@@ -1,0 +1,56 @@
+#!/bin/bash
+
+sudo yum install epel-release
+
+sudo yum group install "Base" 
+sudo yum group install "Common NetworkManager submodules" 
+sudo yum group install "Fonts" 
+sudo yum group install "Graphics Creation Tools" 
+sudo yum group install "Internet Browser" 
+sudo yum group install "Multimedia" 
+sudo yum group install "Office Suite and Productivity" 
+sudo yum group install "Printing Client" 
+sudo yum group install "X Window System" 
+sudo yum group install "Xfce"
+
+sudo yum install lightdm
+sudo yum remove gdm
+systemctl enable lightdm
+systemctl set-default graphical.target
+
+sudo yum install google-droid*
+sudo yum install oxygen-cursor-themes
+sudo yum install xfce4-*
+sudo yum install gvfs
+sudo yum install network-manager-applet
+sudo yum install xdg-user-dirs
+sudo yum install evince
+sudo yum install ristretto
+sudo yum install mousepad
+sudo yum install xarchiver
+sudo yum install brasero
+
+sudo yum install http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+sudo yum install flash-plugin
+
+sudo yum install https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm
+sudo yum install https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm
+
+sudo yum install smplayer
+sudo yum install vlc
+
+
+# Set appearance - themes, fonts, slight hinting
+# Make trash work, if necessary, create ~/.local/share/Trash/ files info
+# Add keyboard layouts
+# Configure sudo to use root password
+# Create yum update --security script
+# Setup locking in /usr/bin/xflock4
+
+# Panel
+# W | LLL | Windows | Weather Pulse Notification Keyboard Clock |
+
+# Check:
+# * Screen tearing
+# * Youtube
+# * Media playback + sound

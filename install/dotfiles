@@ -54,6 +54,8 @@ SUDO_FILES=(
     
     "drivers/10-intel.conf" "/etc/X11/xorg.conf.d/10-intel.conf"
     "drivers/30-touchpad.conf" "/etc/X11/xorg.conf.d/30-touchpad.conf"
+    
+    "dnf.conf" "/etc/dnf/dnf.conf"
 
     "sudoers" "/etc/sudoers"
 )

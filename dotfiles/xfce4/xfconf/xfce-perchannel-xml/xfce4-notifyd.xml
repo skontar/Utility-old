@@ -40,4 +40,5 @@
   <property name="primary-monitor" type="uint" value="1"/>
   <property name="do-slideout" type="bool" value="false"/>
   <property name="initial-opacity" type="double" value="0.900000"/>
+  <property name="do-not-disturb" type="bool" value="false"/>
 </channel>

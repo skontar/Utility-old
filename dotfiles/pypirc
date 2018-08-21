@@ -1,12 +1,11 @@
 [distutils]
 index-servers = 
     pypi
-    pypitest
+    testpypi
 
 [pypi]
-repository = https://pypi.python.org/pypi
-username = skontar
+username: skontar
 
-[pypitest]
-repository = https://testpypi.python.org/pypi
-username = skontar
+[testpypi]
+repository: https://test.pypi.org/legacy/
+username: skontar
