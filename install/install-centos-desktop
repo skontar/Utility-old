@@ -2,50 +2,55 @@
 
 sudo yum install epel-release
 
-sudo yum group install "Base" 
-sudo yum group install "Common NetworkManager submodules" 
-sudo yum group install "Fonts" 
-sudo yum group install "Graphics Creation Tools" 
-sudo yum group install "Internet Browser" 
-sudo yum group install "Multimedia" 
-sudo yum group install "Office Suite and Productivity" 
-sudo yum group install "Printing Client" 
-sudo yum group install "X Window System" 
-sudo yum group install "Xfce"
+sudo yum group install -y "Base" 
+sudo yum group install -y "Common NetworkManager submodules" 
+sudo yum group install -y "Fonts" 
+sudo yum group install -y "Graphics Creation Tools" 
+sudo yum group install -y "Internet Browser" 
+sudo yum group install -y "Multimedia" 
+sudo yum group install -y "Office Suite and Productivity" 
+sudo yum group install -y "Printing Client" 
+sudo yum group install -y "X Window System" 
+sudo yum group install -y "Xfce"
 
-sudo yum install lightdm
-sudo yum remove gdm
-systemctl enable lightdm
-systemctl set-default graphical.target
+sudo yum install -y lightdm
+sudo yum remove -y gdm
+sudo systemctl enable lightdm
+sudo systemctl set-default graphical.target
 
-sudo yum install google-droid*
-sudo yum install oxygen-cursor-themes
-sudo yum install xfce4-*
-sudo yum install gvfs
-sudo yum install network-manager-applet
-sudo yum install xdg-user-dirs
-sudo yum install evince
-sudo yum install ristretto
-sudo yum install mousepad
-sudo yum install xarchiver
-sudo yum install brasero
+sudo yum install -y google-droid*
+sudo yum install -y oxygen-cursor-themes
+sudo yum install -y xfce4-*
+sudo yum install -y gvfs
+sudo yum install -y network-manager-applet
+sudo yum install -y xdg-user-dirs
+sudo yum install -y evince
+sudo yum install -y ristretto
+sudo yum install -y mousepad
+sudo yum install -y xarchiver
+sudo yum install -y brasero
+sudo yum install -y htop
+sudo yum install -y powertop
+sudo yum install -y tlp
 
-sudo yum install http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
-sudo yum install flash-plugin
 
-sudo yum install https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm
-sudo yum install https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm
+sudo yum install -y http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+sudo yum install -y flash-plugin
 
-sudo yum install smplayer
-sudo yum install vlc
+sudo yum install -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm
+sudo yum install -y https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-7.noarch.rpm
+
+sudo yum install -y smplayer
+sudo yum install -y vlc
 
 
 # Set appearance - themes, fonts, slight hinting
-# Make trash work, if necessary, create ~/.local/share/Trash/ files info
 # Add keyboard layouts
 # Configure sudo to use root password
 # Create yum update --security script
 # Setup locking in /usr/bin/xflock4
+# Firefox - install uBlock
+# Enable tlp
 
 # Panel
 # W | LLL | Windows | Weather Pulse Notification Keyboard Clock |
@@ -54,3 +59,15 @@ sudo yum install vlc
 # * Screen tearing
 # * Youtube
 # * Media playback + sound
+# * USB Automount
+# * Powertop
+
+# Remove abrt
+# Update
+
+# Disable auditd - fails to start sometimes
+# Disable postfix
+# Disable ssh
+# Disable udisks2
+
+# Change root password

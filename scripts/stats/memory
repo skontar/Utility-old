@@ -3,16 +3,16 @@
 if [[ $BLOCK_BUTTON == "1" ]]; then
     if ! wmctrl -F -c "Top popup"; then
         notify-send -t 2000 "Counting processes..."
-      
-        top=$( top -bn2 ) 
+
+        top=$( top -bn2 )
         filtered_cpu=$( awk '
-          BEGIN { 
+          BEGIN {
             headers = 0
-            lines = 0 
-            printf "%-17s %5s", "COMMAND", "CPU%" 
-          } 
-           
-          { 
+            lines = 0
+            printf "%-17s %5s", "COMMAND", "CPU%"
+          }
+
+          {
             if (headers == 2 && lines < 5) {
               lines++
               name=$12
@@ -22,81 +22,89 @@ if [[ $BLOCK_BUTTON == "1" ]]; then
               printf "\n%-17s %4.1f%", name, $9 / 4
             }
           }
-           
+
           /PID USER      PR/ {
             headers++
           }' <<< "$top" )
-        
-        mem=$( ps axo comm,rss --sort=-%mem --no-headers | head -n 30 )    
+
+        mem=$( ps axo comm,rss --sort=-%mem --no-headers | head -n 30 )
         filtered_mem=$( awk '
-          BEGIN { 
-			  printf "%-17s %5s", "COMMAND", "RSS"
-			  stored_lines = 0
-	      }
-          
+          BEGIN {
+              printf "%-17s %5s", "COMMAND", "RSS"
+              stored_lines = 0
+          }
+
           {
-			  name=$1
+              name=$1
               for (i = 2; i < NF; i++) {
                   name=name" "$i
               }
-              
+
               if (name == "Web Content" || name == "firefox") {
-			      firefox += $NF
-			  }
-			  else if (name == "chrome") {
-			      chrome += $NF
-			  }
-			  else {
-				  lines[stored_lines, 0] = name
-				  lines[stored_lines, 1] = $NF
-				  stored_lines++
-			  }
-		  }
-		  
-		  END {
-			  if (firefox > 0) {
-			      lines[stored_lines, 0] = "Firefox"  
-			      lines[stored_lines, 1] = firefox
-			      stored_lines++
-			  }
-			  if (chrome > 0) {
-			      lines[stored_lines, 0] = "Chrome"  
-			      lines[stored_lines, 1] = chrome
-			      stored_lines++
-			  }
-			  		  
+                  firefox += $NF
+              }
+              else if (name == "chrome") {
+                  chrome += $NF
+              }
+              else if (name == "chromium-browse") {
+                  chromium += $NF
+              }
+              else {
+                  lines[stored_lines, 0] = name
+                  lines[stored_lines, 1] = $NF
+                  stored_lines++
+              }
+          }
+
+          END {
+              if (firefox > 0) {
+                  lines[stored_lines, 0] = "Firefox"
+                  lines[stored_lines, 1] = firefox
+                  stored_lines++
+              }
+              if (chrome > 0) {
+                  lines[stored_lines, 0] = "Chrome"
+                  lines[stored_lines, 1] = chrome
+                  stored_lines++
+              }
+              if (chromium > 0) {
+                  lines[stored_lines, 0] = "Chromium"
+                  lines[stored_lines, 1] = chromium
+                  stored_lines++
+              }
+
               for (i = 0; i < stored_lines; i++)
                   for (j = 0; j < (stored_lines - 1 - i); j++)
                       if (lines[j, 1] < lines[j+1, 1]) {
-						  t = lines[j, 1]
-						  lines[j, 1] = lines[j+1, 1]
-						  lines[j+1, 1] = t
-						  t = lines[j, 0]
-						  lines[j, 0] = lines[j+1, 0]
-						  lines[j+1, 0] = t
-					  }
-			  
+                          t = lines[j, 1]
+                          lines[j, 1] = lines[j+1, 1]
+                          lines[j+1, 1] = t
+                          t = lines[j, 0]
+                          lines[j, 0] = lines[j+1, 0]
+                          lines[j+1, 0] = t
+                      }
+
               for (i = 0; i < 10; i++) {
-				  name = lines[i, 0]
-				  value = lines[i, 1]
-			      if(int(value / 1024 / 1024)) { 
+                  name = lines[i, 0]
+                  value = lines[i, 1]
+                  if(int(value / 1024 / 1024)) {
                       printf "\n%-17s %3.1fGB", name, value / 1024 / 1024
-                  } 
-                  else if (int(value / 1024 / 1000)) { 
+                  }
+                  else if (int(value / 1024 / 1000)) {
                       printf "\n%-17s %3.1fGB", name, 1.0  # to avoid 1010MB etc.
                   }
-                  else if (int(value / 1024 )) { 
-                      printf "\n%-17s %3dMB", name, int(value / 1024) 
-                  } 
-                  else if (int(value / 1000 )) { 
+                  else if (int(value / 1024 )) {
+                      printf "\n%-17s %3dMB", name, int(value / 1024)
+                  }
+                  else if (int(value / 1000 )) {
                       printf "\n%-17s %3dMB", name, 1.0  # to avoid 1005kB etc.
-                  } 
+                  }
                   else {
                       printf "\n%-17s %3dkB", name, int(value)
-                  } 
-			  }
+                  }
+              }
           }' <<< "$mem" )
-        
+
         printf "%s\n\n%s" "$filtered_cpu" "$filtered_mem" | yad --text-info --width 220 --height 335 --no-buttons --title "Top popup" &> /dev/null &
     fi
 fi

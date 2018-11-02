@@ -13,10 +13,11 @@ ifconfig_filtered=$( grep -E '^([^[:space:]]+:|[[:space:]]+RX packets|[[:space:]
 
 if [[ "$wired_state" == "up" ]]; then
     wired_ifdata=$( grep "$wired_name" -A 3 <<< "$ifconfig_filtered" )
-    wired_ip=$( sed -r -n 's/^.*inet ([[:digit:]\.]+).*$/\1/p' <<< "$wired_ifdata" )
+    # wired_ip=$( sed -r -n 's/^.*inet ([[:digit:]\.]+).*$/\1/p' <<< "$wired_ifdata" )
     domain=$( dnsdomainname )
     
-    first_part=" $domain $wired_ip"
+    # first_part=" $domain $wired_ip"
+    first_part=" $domain"
     first_part_short=" $domain"
 fi
 
@@ -35,11 +36,12 @@ if [[ "$wifi_state" == "up" ]]; then
     fi
     
     wifi_ifdata=$( grep "$wifi_name" -A 3 <<< "$ifconfig_filtered" )
-    wifi_ip=$( sed -r -n 's/^.*inet ([[:digit:]\.]+).*$/\1/p' <<< "$wifi_ifdata" )
+    # wifi_ip=$( sed -r -n 's/^.*inet ([[:digit:]\.]+).*$/\1/p' <<< "$wifi_ifdata" )
     wifi_rx=$( sed -r -n 's/^[[:space:]]+RX.*\((.*)\)/\1/p' <<< "$wifi_ifdata" )
     wifi_tx=$( sed -r -n 's/^[[:space:]]+TX.*\((.*)\)/\1/p' <<< "$wifi_ifdata" )
     
-    second_part="$wifi_symbol $essid $wifi_ip  $wifi_rx  $wifi_tx"
+    # second_part="$wifi_symbol $essid $wifi_ip  $wifi_rx  $wifi_tx"
+    second_part="$wifi_symbol $essid  $wifi_rx  $wifi_tx"
     second_part_short="$wifi_symbol $essid"
 fi
 
