@@ -230,7 +230,7 @@ bar {
     output HDMI-2
     output DP2-2
     output DP-2-2
-    font pango: Hack, FontAwesome 11.5
+    font pango: FontAwesome, Hack 11.5
     height 32
     tray_output primary
     tray_padding 4
