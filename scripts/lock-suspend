@@ -7,7 +7,7 @@ delayed_suspend() {
 
 wmctrl -c "KeePassXC"
 delayed_suspend &
-lock
+# lock
 
 
 
