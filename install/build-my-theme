@@ -1,0 +1,59 @@
+#!/bin/bash
+
+wget https://github.com/shimmerproject/Greybird/archive/master.zip
+unzip master.zip
+rm master.zip
+
+cd Greybird-master
+
+# GTK2
+sed -i 's/fg_color:#3C3C3C\\nselected_fg_color:#ffffff\\ntext_color:#212121/fg_color:#1E1E1E\\nselected_fg_color:#ffffff\\ntext_color:#101010/' gtk-2.0/gtkrc
+
+# GTK3
+
+sed -i 's/#3c3c3c/#1e1e1e/' gtk-3.0/_colors.scss
+sed -i 's/#212121/#101010/' gtk-3.0/_colors.scss
+./autogen.sh --prefix=$HOME/.local
+make
+
+# Build
+mkdir -p ../Fenikso/xfce-notify-4.0
+cp -r gtk-2.0 ../Fenikso
+cp -r gtk-3.0 ../Fenikso
+
+cat > ../Fenikso/xfce-notify-4.0/gtk.css << EOF
+#XfceNotifyWindow {
+    background-color: #4d4d4d;
+    color: #ffffff;
+    border: 2px solid #fff;
+    border-radius: 1px;
+}
+
+#XfceNotifyWindow:hover {
+    border-width: 3px;
+}
+
+#XfceNotifyWindow buttonbox {
+    padding: 1px;
+}
+
+#XfceNotifyWindow button {
+    border-color: #191919;
+    border-radius: 0px;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.2);
+    background-image: linear-gradient(to bottom, shade(shade(#202020, 1.02), 1.05), shade(shade(#202020, 1.02), 0.97));
+    color: #ffffff;
+}
+
+#XfceNotifyWindow button:hover {
+    border-color: #323232;
+    border-radius: 0px;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.2);
+    background-image: linear-gradient(to bottom, shade(#404040, 1.15), shade(#404040, 1.07));
+    color: #ffffff;
+}
+
+#XfceNotifyWindow label#summary {
+    font-weight: bold;
+}
+EOF
