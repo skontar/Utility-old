@@ -2,7 +2,7 @@
 
 if [[ $BLOCK_BUTTON == "1" ]]; then
     if ! pkill -f xfce4-power-manager-settings; then
-        xfce4-power-manager-settings &
+        xfce4-power-manager-settings &> /dev/null &
     fi
 fi
 
