@@ -8,6 +8,5 @@ else
 fi
 
 if [[ -n "$kerberos" ]]; then
-    firefox -new-tab "https://people.engineering.redhat.com/employee/$kerberos"
     firefox -new-tab "https://rover.redhat.com/people/profile/$kerberos/false"  
 fi
