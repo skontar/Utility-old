@@ -154,7 +154,9 @@ bindsym $mod+t                 exec thunderbird
 bindsym $mod+y                 exec virt-manager                                
 bindsym $mod+c                 exec /opt/google/chrome/chrome
 bindsym $mod+g                 exec geany                               
-bindsym Print                  exec xfce4-screenshooter
+bindsym Shift+Print                  exec xfce4-screenshooter
+bindsym Print                  exec screenshot
+
 
 # Keybindings - scripts        
 bindsym $mod+k                 exec xfce4-terminal --role floating -x kerberos
@@ -162,7 +164,7 @@ bindsym $mod+o                 exec --no-startup-id toggle-dropbox
 bindsym $mod+p                 exec --no-startup-id presentation-switch
 bindsym $mod+comma             exec --no-startup-id displays 
 bindsym $mod+period            exec --no-startup-id "displays single; pkill -RTMIN+1 i3blocks"
-bindsym $mod+slash             exec --no-startup-id "displays dual; pkill -RTMIN+1 i3blocks"
+bindsym $mod+slash             exec --no-startup-id "displays dock; pkill -RTMIN+1 i3blocks"
 bindsym $mod+m                 exec --no-startup-id "displays mirror; pkill -RTMIN+1 i3blocks"
 bindsym $mod+n                 exec --no-startup-id vpn-connect
 bindsym $mod+s                 exec --no-startup-id start-apps
