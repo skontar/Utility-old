@@ -5,136 +5,101 @@
 
 D_LAPTOP="eDP1"
 D_SINGLE="HDMI2"
-D_BACKUP="DP2" # Backup projector port, t470s has none...
-D_DUAL_1="DP2-1"
-D_DUAL_2="DP2-2"
+D_DOCK="DP2-2"
+D_PROJECTOR="$D_SINGLE"
 
+tell() {
+    local message="$1"
+
+    echo "$message"
+    sleep 0.5  # Wait a bit for notification, so it shows correctly
+    notify-send "$message" -t 3000
+}
 
 all_off() {
     xrandr --output "$D_LAPTOP" --off
-    xrandr --output "$D_DUAL_1" --off
-    xrandr --output "$D_DUAL_2" --off
     xrandr --output "$D_SINGLE" --off
-    xrandr --output "$D_BACKUP" --off
+    xrandr --output "$D_DOCK" --off
 }
 
-single_screen() {
-    xrandr --output "$D_SINGLE" --primary --auto
+screen_change() {
+    local screen="$1"
+    local message="$2"
 
+    all_off
+    xrandr --output "$screen" --primary --auto
     xrandr --dpi 96x96
-    echo "Single screen"
-    notify-send "Single screen" -t 3000
-}
 
-dual_screen() {
-    xrandr --output "$D_DUAL_2" --primary --auto
-    #~ xrandr --output "$D_DUAL_2" --auto --right-of "$D_DUAL_1"
-
-    xrandr --dpi 96x96
-    echo "Dual screen"
-    notify-send "Dual Screen" -t 3000
-}
-
-laptop_only() {
-    xrandr --output "$D_LAPTOP" --primary --auto
-
-    xrandr --dpi 96x96
-    echo "Laptop only"
-    notify-send "Laptop only" -t 3000
+    tell "$message"
 }
 
 mirror() {
-    xrandr --output "$1" --primary --mode "$2"
-    xrandr --output "$D_LAPTOP" --same-as "$1" --mode 1920x1080 --scale-from "$2"
+    local resolution="$1"
 
-    if [[ "$1" != "$D_SINGLE" ]]; then
-        xrandr --output "$D_SINGLE" --off
-    fi
-    if [[ "$1" != "$D_BACKUP" ]]; then
-        xrandr --output "$D_BACKUP" --off
-    fi
-
+    all_off
+    xrandr --output "$D_PROJECTOR" --primary --mode "$resolution"
+    xrandr --output "$D_LAPTOP" --same-as "$D_PROJECTOR" --mode 1920x1080 --scale-from "$resolution"
     xrandr --dpi 96x96
-    echo "Mirror"
-    notify-send "Mirror" -t 3000
+
+    tell "Mirror"
 }
 
-check_available() {
-    # Primary projector port - preferred
-    if grep -q -s "$D_SINGLE connected" <<< "$1"; then
-        echo "$D_SINGLE"
-    fi
-    # Backup projector (VGA?)
-    if grep -q -s "$D_BACKUP connected" <<< "$1"; then
-        echo "$D_BACKUP"
-    fi
+parse_xrandr() {
+    local xrandr_output
+
+    xrandr_output=$( xrandr )
+    connected=( $( awk '/ connected/ { print $1 }' <<< "$xrandr_output" ) )
+    active=( $( awk '/connected/ { used = 0; screen = $1 }
+                     /\*/ { print screen }' <<< "$xrandr_output" ) )
+    projector_resolutions=( $( awk 'use && /connected/ && !/'"$D_PROJECTOR"'/ { exit }
+                                    use { print $1 }
+                                    /'"$D_PROJECTOR"' connected/ { use = 1 }' <<< "$xrandr_output" ) )
 }
 
-kill_apps() {
-    compositor-stop
-}
-
-restart_apps() {
-    sleep 2
-    i3-msg restart
-}
-
-get_resolutions() {
-    lines=$( sed -n "/$2 connected/,/connected/p" <<< "$1\nconnected" )
-    sed -n -r -e 's/^  [[:space:]]*([[:digit:]]+x[[:digit:]]+).*$/\1/p' <<< "$lines"
-}
-
-
-notify-send "Changing screens..." -t 2000
-
-kill_apps
 
 case "$1" in
     "auto")
-        xrandr_output=$( xrandr )
-        all_off
-        if grep -q -E "$D_DUAL_2 connected" <<< "$xrandr_output"; then
-            dual_screen
-        elif grep -q -E "$D_SINGLE connected" <<< "$xrandr_output"; then
-            single_screen
+        parse_xrandr
+        if [[ "${connected[*]}" == *"$D_DOCK"* ]]; then
+            if [[ ! "${active[*]}" == *"$D_DOCK"* ]]; then
+                screen_change "$D_DOCK" "Dock"
+            fi  # Else nothing
+        elif [[ "${connected[*]}" == *"$D_SINGLE"* ]]; then
+            if [[ ! "${active[*]}" == *"$D_SINGLE"* ]]; then
+                screen_change "$D_SINGLE" "Single screen"
+            fi  # Else nothing
         else
-            laptop_only
+            if [[ ! "${active[*]}" == *"$D_LAPTOP"* ]]; then
+                screen_change "$D_LAPTOP" "Laptop only"
+            fi  # Else nothing
         fi
         ;;
     "single")
-        all_off
-        single_screen
+        screen_change "$D_SINGLE" "Single screen"
         ;;
-    "dual")
-        all_off
-        dual_screen
+    "dock")
+        screen_change "$D_DOCK" "Dock"
         ;;
     "mirror")
-        xrandr_output=$( xrandr )
-        output_screen=$( check_available "$xrandr_output" )
-        if [[ -n "$output_screen" ]]; then
-            resolutions=( $( get_resolutions "$xrandr_output" "$output_screen" ) )
+        parse_xrandr
+        if [[ "${connected[*]}" == *"$D_PROJECTOR"* ]]; then
             if command -v yad > /dev/null; then
                 selected_resolution=$( yad --list --width=250 --height=200 \
                                        --title "Select resolution" --no-headers --separator="" \
-                                       --column="" "${resolutions[@]}" )
+                                       --column="" "${projector_resolutions[@]}" )
                 if (( $? != 0 )); then
                     exit 2
                 fi
             else
-                notify-send 'You need `yad` installed to select resolution' -t 3000
-                selected_resolution="${resolutions[0]}"
+                tell 'You need `yad` installed to select resolution'
+                selected_resolution="${projector_resolutions[0]}"
             fi
-            all_off
-            mirror "$output_screen" "$selected_resolution"
+            mirror "$selected_resolution"
         else
-            notify-send "No projector connected" -t 3000
+            tell "No projector connected"
         fi
         ;;
     *)
-        all_off
-        laptop_only
+        screen_change "$D_LAPTOP" "Laptop only"
         ;;
 esac
-
-restart_apps
