@@ -1,0 +1,8 @@
+#!/bin/bash
+
+window_id=$( xdotool getactivewindow )
+xdotool windowactivate --sync ${window_id}
+xdotool keyup super
+xdotool keyup shift
+sleep 0.1
+xdotool type --delay 10 --clearmodifiers '¯\_(ツ)_/¯'

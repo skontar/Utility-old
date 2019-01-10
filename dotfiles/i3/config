@@ -154,7 +154,7 @@ bindsym $mod+t                 exec thunderbird
 bindsym $mod+y                 exec virt-manager                                
 bindsym $mod+c                 exec /opt/google/chrome/chrome
 bindsym $mod+g                 exec geany                               
-bindsym Shift+Print                  exec xfce4-screenshooter
+bindsym Shift+Print            exec xfce4-screenshooter
 bindsym Print                  exec screenshot
 
 
@@ -175,6 +175,7 @@ bindsym $mod+z                 exec xfce4-terminal --role floating -x ssh-unlock
 bindsym --release $mod+a       exec --no-startup-id keepass-autotype-layout
 
 bindsym $mod+b                 exec "cd ~/Dropbox/Atari/; ~/Dropbox/Atari/start"
+bindsym --release $mod+Shift+s exec shrug
 
 # Keybindings - system
 bindsym XF86AudioRaiseVolume   exec --no-startup-id ~/Utility/scripts/stats/volume up
