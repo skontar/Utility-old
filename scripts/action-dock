@@ -21,6 +21,7 @@ state=$( cut -d " " -f 4 <<< "$1" )
 if [[ "$state" == "00006030" ]]; then
     # Dock changed
     echo "> Dock changed"
+    sleep 2
     displays auto
     pkill -RTMIN+1 i3blocks
 fi
