@@ -64,8 +64,8 @@ if [ -f /usr/share/doc/git/contrib/completion/git-completion.bash ]; then
   __git_complete gco _git_checkout
 fi
 
-if [ -f ~/Repos/insights-tools/development/plugin-completion.bash ]; then
-  . ~/Repos/insights-tools/development/plugin-completion.bash
+if [ -f ~/Repos/insights-tools/rule_development/plugin-completion.bash ]; then
+  . ~/Repos/insights-tools/rule_development/plugin-completion.bash
 fi
 
 # Git bash prompt

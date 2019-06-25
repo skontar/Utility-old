@@ -21,8 +21,7 @@ for (( i = 0; i < nr_of_elements; i += 2 )); do
     echo "[$command_index] - $command_name_upper"
 done
 
-# Read one character
-read -rsn1 response
+read response
 
 # Check and execute command with number
 nr_of_commands=$(( nr_of_elements / 2 ))

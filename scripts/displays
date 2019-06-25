@@ -61,17 +61,23 @@ case "$1" in
     "auto")
         parse_xrandr
         if [[ "${connected[*]}" == *"$D_DOCK"* ]]; then
-            if [[ ! "${active[*]}" == *"$D_DOCK"* ]]; then
-                screen_change "$D_DOCK" "Dock"
-            fi  # Else nothing
+            # Do not check if D_DOCK is active, as there is bug 
+            # somewhere and after dock connection it always thinks that
+            # it is active
+            screen_change "$D_DOCK" "Dock"
         elif [[ "${connected[*]}" == *"$D_SINGLE"* ]]; then
             if [[ ! "${active[*]}" == *"$D_SINGLE"* ]]; then
                 screen_change "$D_SINGLE" "Single screen"
-            fi  # Else nothing
+            else
+                echo "$D_SINGLE is already active"
+            fi
+            
         else
             if [[ ! "${active[*]}" == *"$D_LAPTOP"* ]]; then
                 screen_change "$D_LAPTOP" "Laptop only"
-            fi  # Else nothing
+            else
+                echo "$D_LAPTOP is already active"
+            fi
         fi
         ;;
     "single")

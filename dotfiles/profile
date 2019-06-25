@@ -1,7 +1,7 @@
 # .profile 
 
 # Executable scripts
-export PATH=$PATH:~/Utility/scripts:~/Utility/bin:~/Repos/insights-tools/development;
+export PATH=$PATH:~/Utility/scripts:~/Utility/bin:~/Repos/insights-tools/rule_development;
 
 # Python libraries
 export PYTHONPATH=$PYTHONPATH:/home/skontar/Python/Libraries

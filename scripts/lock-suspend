@@ -5,9 +5,10 @@ delayed_suspend() {
     systemctl suspend
 }
 
-wmctrl -c "KeePassXC"
-delayed_suspend &
+# wmctrl -c "KeePassXC"
+# delayed_suspend &
 # lock
 
+systemctl suspend
 
 

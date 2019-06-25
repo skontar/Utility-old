@@ -2,11 +2,10 @@
 
 DIRECTORIES=( 
     "$HOME/Documents"
-    "$HOME/Presentation"
     "$HOME/Python"
     "$HOME/Utility"
 )
-SSH="skontar@file.brq.redhat.com"
+SSH="skontar@file.emea.redhat.com"
 TARGET="~/backups"
 DATE=$( date +%Y-%m-%d-%H%M%S )
 

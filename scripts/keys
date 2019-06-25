@@ -5,4 +5,4 @@ xdotool windowactivate --sync ${window_id}
 xdotool keyup super
 xdotool keyup shift
 sleep 0.2
-xdotool type --delay 50 --clearmodifiers '¯\_(ツ)_/¯'
+xdotool type --delay 50 --clearmodifiers "$1"

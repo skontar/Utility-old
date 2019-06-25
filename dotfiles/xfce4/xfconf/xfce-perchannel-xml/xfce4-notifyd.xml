@@ -13,6 +13,7 @@
       <value type="string" value="google-chrome"/>
       <value type="string" value="hexchat"/>
       <value type="string" value="Hexchat notification server"/>
+      <value type="string" value="io.github.Hexchat"/>
       <value type="string" value="mcheck"/>
       <value type="string" value="nm-applet"/>
       <value type="string" value="notify-send"/>

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+while read window; do
+    wmctrl -i -c "$window"
+done <<< $( wmctrl -l | awk '{ print $1 }' )
+sleep 2

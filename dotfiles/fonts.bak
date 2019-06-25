@@ -8,9 +8,7 @@
     <match target="font">
         <edit name="antialias"><bool>true</bool></edit>
         <edit name="autohint"><bool>false</bool></edit>
-<!--
         <edit name="embeddedbitmap"><bool>false</bool></edit>
--->
         <edit name="hinting"><bool>true</bool></edit>
         <edit name="hintstyle"><const>hintslight</const></edit>
         <edit name="lcdfilter"><const>lcddefault</const></edit>

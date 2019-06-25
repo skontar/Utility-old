@@ -52,7 +52,6 @@ set $ws9 "9:  "
 set $ws10 "10:  "
 
 # Use keycodes to make sure it works on different layouts
-# bindsym $mod+1 workspace $ws1
 bindcode $mod+10 workspace $ws1
 bindcode $mod+11 workspace $ws2
 bindcode $mod+12 workspace $ws3
@@ -76,9 +75,6 @@ bindcode $mod+Shift+18 move container to workspace $ws9, workspace $ws9
 bindcode $mod+Shift+19 move container to workspace $ws10, workspace $ws10
 
 
-# workspace $ws4 output DP2-1
-
-
 # Windows
 floating_modifier $mod
 focus_on_window_activation focus
@@ -100,7 +96,7 @@ for_window [class="VirtualBox" title="- Oracle VM VirtualBox"] floating enable
 # Fix PyCharm quirks
 for_window [instance="sun-awt-X11-XWindowPeer"] border pixel 0
 # for_window [class="^jetbrains-.+"][window_type=dialog] focus
-# Settings -> Appearance -> "Hide navigation popups on focus loss" -> deactivate
+# ^== Settings -> Appearance -> "Hide navigation popups on focus loss" -> deactivate
 # ...fixed this?
 
 assign [class="Thunderbird"] $ws1
@@ -130,8 +126,6 @@ bindsym $mod+Shift+c           reload
 bindsym $mod+Shift+r           restart
 bindsym $mod+Ctrl+Left         move workspace to output left
 bindsym $mod+Ctrl+Right        move workspace to output right
-bindsym $mod+Shift+minus       move scratchpad
-# bindsym $mod+Shift+plus        scratchpad show
 bindsym $mod+h                 split h
 bindsym $mod+v                 split v
 bindsym $mod+w                 layout toggle tabbed split
@@ -139,7 +133,6 @@ bindsym $mod+e                 layout toggle split
 bindsym $mod+f                 fullscreen toggle
 bindsym $mod+u                 [urgent=latest] focus
 bindsym --release $mod+Escape  exec xkill
-bindsym $mod+Tab               exec --no-startup-id compositor-restart
 
 
 # Keybindings - applications
@@ -147,7 +140,6 @@ bindsym $mod+Return            exec xfce4-terminal
 bindsym F12                    exec xfce4-terminal --drop-down
 bindsym $mod+Alt_L             exec "rofi -show window -modi window,drun,run -sidebar-mode"
 bindsym Mod1+F3                exec "rofi -show drun -modi window,drun,run -sidebar-mode"
-# bindsym Mod1+F3				   exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -fn 'Hack-20' -l 10"
 bindsym $mod+d                 exec doublecmd                               
 bindsym $mod+i                 exec firefox                               
 bindsym $mod+t                 exec thunderbird                               
@@ -162,20 +154,20 @@ bindsym Print                  exec screenshot
 bindsym $mod+k                 exec xfce4-terminal --role floating -x kerberos
 bindsym $mod+o                 exec --no-startup-id toggle-dropbox
 bindsym $mod+p                 exec --no-startup-id presentation-switch
-bindsym $mod+comma             exec --no-startup-id displays 
-bindsym $mod+period            exec --no-startup-id "displays single; pkill -RTMIN+1 i3blocks"
-bindsym $mod+slash             exec --no-startup-id "displays dock; pkill -RTMIN+1 i3blocks"
+bindcode $mod+59               exec --no-startup-id displays 
+bindcode $mod+60               exec --no-startup-id "displays single; pkill -RTMIN+1 i3blocks"
+bindcode $mod+61               exec --no-startup-id "displays dock; pkill -RTMIN+1 i3blocks"
 bindsym $mod+m                 exec --no-startup-id "displays mirror; pkill -RTMIN+1 i3blocks"
 bindsym $mod+n                 exec --no-startup-id vpn-connect
 bindsym $mod+s                 exec --no-startup-id start-apps
-bindsym $mod+less              exec people-search
+bindcode $mod+94               exec people-search
 bindsym $mod+grave             exec xfce4-terminal --role floating -x remote-mount --nohup
 bindsym $mod+l                 exec --no-startup-id lock
 bindsym $mod+z                 exec xfce4-terminal --role floating -x ssh-unlock
 bindsym --release $mod+a       exec --no-startup-id keepass-autotype-layout
 
 bindsym $mod+b                 exec "cd ~/Dropbox/Atari/; ~/Dropbox/Atari/start"
-bindsym --release $mod+Shift+s exec shrug
+
 
 # Keybindings - system
 bindsym XF86AudioRaiseVolume   exec --no-startup-id ~/Utility/scripts/stats/volume up
@@ -188,10 +180,10 @@ bindsym Caps_Lock              exec --no-startup-id ~/Utility/scripts/stats/keyb
 # Power mode
 set $mode_power <b> <u>L</u>ogout | <u>S</u>uspend | <u>R</u>estart | <u>P</u>oweroff </b>
 mode --pango_markup "$mode_power" {
-    bindsym l mode "default", exec --no-startup-id i3-msg exit
+    bindsym l mode "default", exec --no-startup-id "close-all-apps; i3-msg exit"
     bindsym s mode "default", exec --no-startup-id lock-suspend
-    bindsym r mode "default", exec --no-startup-id systemctl reboot
-    bindsym p mode "default", exec --no-startup-id systemctl poweroff
+    bindsym r mode "default", exec --no-startup-id "close-all-apps; systemctl reboot"
+    bindsym p mode "default", exec --no-startup-id "close-all-apps; systemctl poweroff"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -222,6 +214,63 @@ mode --pango_markup "$mode_resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "$mode_resize"
+
+
+# Emoji mode
+set $mode_emoji <b> Paste: <u>U</u>👍 <u>D</u>👎 <u>S</u>😀 <u>G</u>😁 <u>C</u>😎 <u>T</u>😋 <u>H</u>😲 <u>F</u>☹️ <u>0</u>🏅 <u>1</u>🥇 <u>2</u>🥈 <u>3</u>🥉 <u>P</u>🎉 <u>R</u>🥃 <u>I</u>🔥 <u>L</u>🔮 <u>E</u>🍵 <u>Y</u>🌶️ <u>O</u>💰 <u>N</u>🐧 <u>M</u>🥧 <u>K</u>🍰 <u>B</u>💣 <u>X</u>🤷 <u>A</u>🤦 <u>Q</u>🥩🥕 <u>W</u>ツ</b>
+mode --pango_markup "$mode_emoji" {
+    bindsym grave mode "default", exec emoji-picker
+    bindsym u mode "default", exec keys 👍
+    bindsym d mode "default", exec keys 👎
+    bindsym s mode "default", exec keys 😀
+    bindsym g mode "default", exec keys 😁
+    bindsym c mode "default", exec keys 😎
+    bindsym t mode "default", exec keys 😋
+    bindsym h mode "default", exec keys 😲
+    bindsym f mode "default", exec keys ☹️
+    bindsym 0 mode "default", exec keys 🏅
+    bindsym 1 mode "default", exec keys 🥇
+    bindsym 2 mode "default", exec keys 🥈
+    bindsym 3 mode "default", exec keys 🥉
+    bindsym p mode "default", exec keys 🎉
+    bindsym r mode "default", exec keys 🥃
+    bindsym i mode "default", exec keys 🔥
+    bindsym l mode "default", exec keys 🔮
+    bindsym e mode "default", exec keys 🍵
+    bindsym y mode "default", exec keys 🌶️
+    bindsym o mode "default", exec keys 💰
+    bindsym n mode "default", exec keys 🐧
+    bindsym m mode "default", exec keys 🥧
+    bindsym k mode "default", exec keys 🍰
+    bindsym b mode "default", exec keys 💣
+    bindsym x mode "default", exec keys 🤷
+    bindsym a mode "default", exec keys 🤦
+    bindsym q mode "default", exec keys 🥩🥕
+    bindsym w mode "default", exec keys '¯\\_(ツ)_/¯'
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindcode $mod+35 mode "$mode_emoji"
+
+
+# Typography mode
+set $mode_typography <b> Paste: <u>D</u>ash – | <u>B</u>ullet • | <u>M</u>inus − | M<u>u</u>ltiply × | <u>E</u>mphasis »« | <u>Q</u>uotes “” | <u>Y</u>es ✔ | <u>N</u>o ✘</b>
+mode --pango_markup "$mode_typography" {
+    bindsym d mode "default", exec keys –
+    bindsym b mode "default", exec keys •
+    bindsym m mode "default", exec keys −
+    bindsym u mode "default", exec keys ×
+    bindsym e mode "default", exec keys »«
+    bindsym q mode "default", exec keys “”
+    bindsym y mode "default", exec keys ✔
+    bindsym n mode "default", exec keys ✘
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindcode $mod+34 mode "$mode_typography"
+
 
 # Status bar
 bar {
@@ -260,24 +309,23 @@ bar {
 }
 
 # Startup
+# exec --no-startup-id pulseaudio -D  
+# ^== systemctl --user start pulseaudio takes care of that now
 exec_always --no-startup-id synclient TapButton1=1
 exec_always --no-startup-id synclient TapButton2=3
 exec_always --no-startup-id synclient TapButton3=2
 exec_always --no-startup-id "setxkbmap -model pc104 -layout us -option grp:caps_toggle"
 exec --no-startup-id ssh-agent &
-# exec --no-startup-id pulseaudio -D    systemctl --user start pulseaudio takes care of that now
 exec --no-startup-id nm-applet &
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/presentation-mode -s false
 exec --no-startup-id xfconf-query -c xfce4-notifyd -p /do-not-disturb -s false
 exec --no-startup-id ksuperkey -e 'Super_L=Alt_L|F3;Super_R=Alt_R|F3' 
-# exec --no-startup-id "sleep 30; update-checker &"
 exec --no-startup-id sudo acpid
 exec --no-startup-id parcellite -n &
 exec --no-startup-id udiskie -2 -s &
 exec --no-startup-id xautolock -locker lock &
 exec_always --no-startup-id feh --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_right.jpg 
-# --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_left.jpg 
 exec_always --no-startup-id compositor-restart
 exec --no-startup-id "sleep 5; pkill -RTMIN+2 i3blocks"
 exec --no-startup-id presence &
