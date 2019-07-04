@@ -101,4 +101,3 @@ activate_function() {
 
 alias a=activate_function
 alias d='deactivate'
-echo "sleep 0.05" >> ~/.bashrc
