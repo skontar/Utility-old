@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [[ -n "$1" ]]; then
+    kerberos="$1"
+else
+    command -v yad &> /dev/null || { echo 'You need `yad` installed'; exit 1; }
+    input=$( yad --entry --text="Kerberos ID or CVE" )
+fi
+
+if [[ -n "$input" ]]; then
+    if [[ "$input" =~ CVE|cve ]]; then
+        firefox -new-tab "https://access.redhat.com/security/cve/${input^^}"  
+        firefox -new-tab "https://bugzilla.redhat.com/${input^^}"
+        firefox -new-tab "https://sfm2.prodsec.redhat.com/static/#/flaw/${input^^}"
+    else
+        firefox -new-tab "https://rover.redhat.com/people/profile/$input/false"  
+    fi
+fi
