@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# DEPRECATED, use `keys` instead 
+
 window_id=$( xdotool getactivewindow )
 class_text=$( xprop -id ${window_id} | grep CLASS )
 

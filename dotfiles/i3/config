@@ -46,7 +46,7 @@ set $ws3 "3:  "
 set $ws4 "4:  "
 set $ws5 "5:  "
 set $ws6 "6:  "
-set $ws7 "7:  "
+set $ws7 "7:  "
 set $ws8 "8:  "
 set $ws9 "9:  "
 set $ws10 "10:  "
@@ -76,6 +76,7 @@ bindcode $mod+Shift+19 move container to workspace $ws10, workspace $ws10
 
 
 # Windows
+# Use xprop to get window info
 floating_modifier $mod
 focus_on_window_activation focus
 
@@ -85,7 +86,7 @@ for_window [class="Ulauncher"] border pixel 0
 for_window [class="Pavucontrol"] floating enable, move position mouse, move up 32 px
 for_window [class="Xfce4-power-manager-settings"] floating enable, move position mouse, move up 32 px
 for_window [class="Yad"] floating enable
-for_window [class="Yad" title="(Calendar|Top|Disk) popup"] move position mouse, move up 32 px
+for_window [class="Yad" title="(Calendar|Top|Disk|Weather) popup"] move position mouse, move up 32 px
 for_window [class="Xfce4-terminal" window_role="floating"] floating enable
 for_window [class="Thunderbird" window_role="Msgcompose"] focus
 for_window [class="Doublecmd"] floating enable
@@ -160,7 +161,7 @@ bindcode $mod+61               exec --no-startup-id "displays dock; pkill -RTMIN
 bindsym $mod+m                 exec --no-startup-id "displays mirror; pkill -RTMIN+1 i3blocks"
 bindsym $mod+n                 exec --no-startup-id vpn-connect
 bindsym $mod+s                 exec --no-startup-id start-apps
-bindcode $mod+94               exec people-search
+bindcode $mod+94               exec search
 bindsym $mod+grave             exec xfce4-terminal --role floating -x remote-mount --nohup
 bindsym $mod+l                 exec --no-startup-id lock
 bindsym $mod+z                 exec xfce4-terminal --role floating -x ssh-unlock
@@ -171,6 +172,7 @@ bindsym $mod+b                 exec "cd ~/Dropbox/Atari/; ~/Dropbox/Atari/start"
 
 # Keybindings - system
 bindsym XF86AudioRaiseVolume   exec --no-startup-id ~/Utility/scripts/stats/volume up
+bindsym Shift+XF86AudioRaiseVolume   exec --no-startup-id ~/Utility/scripts/stats/volume up force
 bindsym XF86AudioLowerVolume   exec --no-startup-id ~/Utility/scripts/stats/volume down
 bindsym XF86AudioMute          exec --no-startup-id ~/Utility/scripts/stats/volume mute
 bindsym XF86MonBrightnessUp    exec --no-startup-id sudo ~/Utility/scripts/stats/brightness up
@@ -178,7 +180,7 @@ bindsym XF86MonBrightnessDown  exec --no-startup-id sudo ~/Utility/scripts/stats
 bindsym Caps_Lock              exec --no-startup-id ~/Utility/scripts/stats/keyboard toggle
 
 # Power mode
-set $mode_power <b> <u>L</u>ogout | <u>S</u>uspend | <u>R</u>estart | <u>P</u>oweroff </b>
+set $mode_power <span font_weight='bold' size='13700' rise='8000'> <u>L</u>ogout | <u>S</u>uspend | <u>R</u>estart | <u>P</u>oweroff </span>
 mode --pango_markup "$mode_power" {
     bindsym l mode "default", exec --no-startup-id "close-all-apps; i3-msg exit"
     bindsym s mode "default", exec --no-startup-id lock-suspend
@@ -191,7 +193,7 @@ mode --pango_markup "$mode_power" {
 bindsym $mod+x mode "$mode_power"
 
 # Edit mode
-set $mode_edit <b> Edit: <u>C</u>onfig | <u>B</u>locks </b>
+set $mode_edit <span font_weight='bold' size='13700' rise='8000'> Edit: <u>C</u>onfig | <u>B</u>locks </span>
 mode --pango_markup "$mode_edit" {
     bindsym c mode "default", exec geany ~/.config/i3/config
     bindsym b mode "default", exec geany ~/.config/i3blocks/config
@@ -203,7 +205,7 @@ bindsym $mod+q mode "$mode_edit"
 
 
 # Resize mode
-set $mode_resize <b> Resize </b>
+set $mode_resize <span font_weight='bold' size='13700' rise='8000'> Resize </span>
 mode --pango_markup "$mode_resize" {
     bindsym Left resize shrink width 20 px or 2 ppt
     bindsym Down resize grow height 20 px or 2 ppt
@@ -217,7 +219,7 @@ bindsym $mod+r mode "$mode_resize"
 
 
 # Emoji mode
-set $mode_emoji <b> Paste: <u>U</u>👍 <u>D</u>👎 <u>S</u>😀 <u>G</u>😁 <u>C</u>😎 <u>T</u>😋 <u>H</u>😲 <u>F</u>☹️ <u>0</u>🏅 <u>1</u>🥇 <u>2</u>🥈 <u>3</u>🥉 <u>P</u>🎉 <u>R</u>🥃 <u>I</u>🔥 <u>L</u>🔮 <u>E</u>🍵 <u>Y</u>🌶️ <u>O</u>💰 <u>N</u>🐧 <u>M</u>🥧 <u>K</u>🍰 <u>B</u>💣 <u>X</u>🤷 <u>A</u>🤦 <u>Q</u>🥩🥕 <u>W</u>ツ</b>
+set $mode_emoji <span font_weight='bold' size='13700' rise='8000'> Paste: <u>U</u>👍 <u>D</u>👎 <u>S</u>😀 <u>G</u>😁 <u>C</u>😎 <u>T</u>😋 <u>H</u>😲 <u>F</u>☹️ <u>0</u>🏅 <u>1</u>🥇 <u>2</u>🥈 <u>3</u>🥉 <u>P</u>🎉 <u>R</u>🥃 <u>I</u>🔥 <u>L</u>🔮 <u>E</u>🍵 <u>Y</u>🌶️ <u>O</u>💰 <u>N</u>🐧 <u>M</u>🥧 <u>K</u>🍰 <u>B</u>💣 <u>X</u>🤷 <u>A</u>🤦 <u>Q</u>🥩🥕 <u>W</u>ツ</span>
 mode --pango_markup "$mode_emoji" {
     bindsym grave mode "default", exec emoji-picker
     bindsym u mode "default", exec keys 👍
@@ -255,7 +257,7 @@ bindcode $mod+35 mode "$mode_emoji"
 
 
 # Typography mode
-set $mode_typography <b> Paste: <u>D</u>ash – | <u>B</u>ullet • | <u>M</u>inus − | M<u>u</u>ltiply × | <u>E</u>mphasis »« | <u>Q</u>uotes “” | <u>Y</u>es ✔ | <u>N</u>o ✘</b>
+set $mode_typography <span font_weight='bold' size='13700' rise='8000'> Paste: <u>D</u>ash – | <u>B</u>ullet • | <u>M</u>inus − | M<u>u</u>ltiply × | <u>E</u>mphasis »« | <u>Q</u>uotes “” | <u>Y</u>es ✔ | <u>N</u>o ✘</span>
 mode --pango_markup "$mode_typography" {
     bindsym d mode "default", exec keys –
     bindsym b mode "default", exec keys •
@@ -317,15 +319,17 @@ exec_always --no-startup-id synclient TapButton3=2
 exec_always --no-startup-id "setxkbmap -model pc104 -layout us -option grp:caps_toggle"
 exec --no-startup-id ssh-agent &
 exec --no-startup-id nm-applet &
+# exec --no-startup-id seapplet &
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/presentation-mode -s false
 exec --no-startup-id xfconf-query -c xfce4-notifyd -p /do-not-disturb -s false
 exec --no-startup-id ksuperkey -e 'Super_L=Alt_L|F3;Super_R=Alt_R|F3' 
 exec --no-startup-id sudo acpid
 exec --no-startup-id parcellite -n &
-exec --no-startup-id udiskie -2 -s &
-exec --no-startup-id xautolock -locker lock &
+exec --no-startup-id udiskie -s &
+# exec --no-startup-id xautolock -time 5 -locker lock &
 exec_always --no-startup-id feh --bg-scale ~/Utility/confidential/wallpapers/converted/blue_planets_right.jpg 
-exec_always --no-startup-id compositor-restart
+# exec_always --no-startup-id compositor-restart
 exec --no-startup-id "sleep 5; pkill -RTMIN+2 i3blocks"
 exec --no-startup-id presence &
+# exec --no-startup-id update-checker &>> ~/update_checker.log &

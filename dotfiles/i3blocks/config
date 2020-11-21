@@ -63,5 +63,9 @@ interval=30
 interval=once
 signal=3
 
+#~ [weather]
+#~ interval=1200
+#~ signal=4
+
 [datetime]
 interval=20

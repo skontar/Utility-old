@@ -1,0 +1,31 @@
+#!/bin/bash
+
+mute_color="#808080"
+SHORT="/tmp/wttr.txt"
+LONG="/tmp/wttr.png"
+DOWNLOAD_SCRIPT="/home/skontar/Utility/scripts/stats/wttrin_png.py"
+
+if [[ $BLOCK_BUTTON == "1" ]]; then
+    if ! wmctrl -F -c "Weather popup"; then
+        yad --image="$LONG" --no-buttons --title "Weather popup" &> /dev/null &
+    fi
+fi
+
+if [[ ! -r "$SHORT" || $( find "$SHORT" -mmin +10 ) ]]; then
+    if ! pgrep -f "$DOWNLOAD_SCRIPT"; then
+        ( python3 "$DOWNLOAD_SCRIPT" &> ~/wttr.log & )  # sub-shell to suppress output
+    fi
+    ( ( sleep 20; pkill -RTMIN+4 i3blocks ) &> /dev/null & )
+fi
+
+if [[ -r "$SHORT" ]]; then
+    if [[ $( find "$SHORT" -mmin +30 ) ]]; then
+        echo $( < "$SHORT" ) "<span color=\"$mute_color\">– stale</span>"
+    else
+        cat "$SHORT"
+    fi
+fi
+
+    
+
+

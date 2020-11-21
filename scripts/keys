@@ -1,8 +1,15 @@
 #!/bin/bash
 
+delay=50
 window_id=$( xdotool getactivewindow )
+window_class=$( xprop -id ${window_id} | grep CLASS )
+
+if [[ "$window_class" =~ Firefox || "$window_class" =~ Thunderbird ]]; then
+    delay=1000
+fi
+
 xdotool windowactivate --sync ${window_id}
 xdotool keyup super
 xdotool keyup shift
 sleep 0.2
-xdotool type --delay 50 --clearmodifiers "$1"
+xdotool getactivewindow type --delay "$delay" --clearmodifiers "$1"

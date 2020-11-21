@@ -10,7 +10,7 @@ PS1='\[\e[1;37m\]\w\[\e[m\] $( RET="$?"; if [[ "$RET" != 0 ]]; then echo "\[\033
 alias u='micro'
 alias v='vagrant'
 alias vu='vagrant up'
-alias vd='vagrant destroy'
+alias vd='vagrant destroy --force'
 alias vh='vagrant halt'
 alias vr='vagrant reload'
 alias vs='vagrant ssh'

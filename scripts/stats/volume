@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mute_color="#808080"
-percentages=( $( seq 0 5 100 ) )
+percentages=( $( seq 0 5 120 ) )
 
 
 read_info() {
@@ -32,6 +32,11 @@ volume_up() {
             fi
         done
     fi
+    if (( volume <= 100 && new_value > 100 )); then
+        if [[ "$1" != "force" ]]; then
+            new_value=100
+        fi
+    fi
     pactl set-sink-volume @DEFAULT_SINK@ "$new_value"%
 }
 
@@ -53,7 +58,7 @@ mute_toggle() {
 
 if [[ "$1" ]]; then
     if [[ "$1" == "up" ]]; then
-        volume_up
+        volume_up "$2"
     elif [[ "$1" == "down" ]]; then
         volume_down
     else

@@ -1,18 +1,19 @@
 #!/bin/bash
 
-if [[ -n "$1" ]]; then
-    kerberos="$1"
-else
-    command -v yad &> /dev/null || { echo 'You need `yad` installed'; exit 1; }
-    input=$( yad --entry --text="Kerberos ID or CVE" )
-fi
+command -v yad &> /dev/null || { echo 'You need `yad` installed'; exit 1; }
+input=$( yad --text="Search..." --entry --button='<b>Kerberos or CVE</b>!gtk-about:0' --button='Documentation!gtk-find:2' --button=gtk-cancel:1 )
+response=$?
 
 if [[ -n "$input" ]]; then
-    if [[ "$input" =~ CVE|cve ]]; then
-        firefox -new-tab "https://access.redhat.com/security/cve/${input^^}"  
-        firefox -new-tab "https://bugzilla.redhat.com/${input^^}"
-        firefox -new-tab "https://sfm2.prodsec.redhat.com/static/#/flaw/${input^^}"
+    if (( response == 2 )); then
+        firefox -new-tab "https://docs.engineering.redhat.com/dosearchsite.action?cql=siteSearch+~+%22$input%22+and+space+%3D+%22PRODSEC%22&queryString=$input"
     else
-        firefox -new-tab "https://rover.redhat.com/people/profile/$input/false"  
+        if [[ "$input" =~ CVE|cve ]]; then
+            firefox -new-tab "https://access.redhat.com/security/cve/${input^^}"  
+            firefox -new-tab "https://bugzilla.redhat.com/${input^^}"
+            firefox -new-tab "https://sfm2.prodsec.redhat.com/static/#/flaw/${input^^}"
+        else
+            firefox -new-tab "https://rover.redhat.com/people/profile/$input/false"  
+        fi
     fi
 fi

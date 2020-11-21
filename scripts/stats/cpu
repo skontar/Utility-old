@@ -5,7 +5,7 @@ critical_color="#ff0000"
 
 cpu=$( top -bn2 | awk '/Cpu\(s\)/ { value = $8 } END { print int(100 - value) }' )
 
-temp_string=$( </sys/class/thermal/thermal_zone2/temp )
+temp_string=$( </sys/class/thermal/thermal_zone3/temp )
 temp=$(( temp_string / 1000 ))
 
 if (( temp > 85 )); then

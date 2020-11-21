@@ -2,11 +2,13 @@
 
 pgrep thunderbird || thunderbird &
 pgrep doublecmd || doublecmd &
-pgrep pycharm || /home/skontar/Programs/pycharm-community-2018.2.2/bin/pycharm.sh &
 pgrep firefox || firefox &
 pgrep hexchat || hexchat &
-# pgrep mcheck || ~/Python/Mcheck/mcheck.py &
 pgrep xfce4-terminal || i3-msg 'workspace "6:  "; exec xfce4-terminal; exec xfce4-terminal'
+sleep 2
+pgrep chromium || i3-msg 'workspace "7:  "; exec calendar'
+sleep 2
+pgrep pycharm || /home/skontar/Programs/pycharm-community-2020.1/bin/pycharm.sh &
 
 sleep 20
 for win in $(wmctrl -l | awk -F' ' '{print $1}'); do
